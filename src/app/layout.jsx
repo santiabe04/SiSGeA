@@ -1,14 +1,15 @@
-import './globals.css'
+"use client"
 
-export const metadata = {
-  title: 'SiSGeA',
-}
+import { NextUIProvider } from '@nextui-org/react'
+import './globals.css'
 
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
       <body>
-        {children}
+        <NextUIProvider>
+            {children}
+        </NextUIProvider>
       </body>
     </html>
   )
