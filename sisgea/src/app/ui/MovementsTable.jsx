@@ -1,49 +1,68 @@
 "use client"
 
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, getKeyValue } from '@nextui-org/react'
-import React, { useEffect, useState } from 'react'
-import { getAllMovements, getMovementsBy } from '../lib/services/movements.service'
+import { Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, getKeyValue } from '@nextui-org/react'
+import React, { useMemo, useState } from 'react'
 
-async function MovementsTableComponent() {
-    const [movements, setMovements] = useState([])
-    //const [filters, setFilters] = useState({})
+function MovementsTableComponent({ data }) {
+    const [page, setPage] = useState(1)
+    const rowsPerPage = 10
 
-    useEffect(async () => {
-        await fetchData()
-    }, [])
+    const pages = Math.ceil(data.length / rowsPerPage)
 
-    /* Fetch Movements */
-    const fetchData = async () => {
-        try {
-            //const { data } = await getMovementsBy(filters)
-            const { data } = await getAllMovements()
-            console.log(data)
-            setMovements(data)
-        } catch (error) {
-            console.error('Error fetching data:', error)
-        }
-    }
+    const items = useMemo(() => {
+        const start = (page - 1) * rowsPerPage
+        const end = start + rowsPerPage
 
+        return data.slice(start, end)
+    }, [page, data])
+    
     return (
-        <Table className='w-fit' aria-label="Movements Consult">
-            <TableHeader>
-                <TableColumn key="name">NOMBRE</TableColumn>
-                <TableColumn key="detail">DETALLE</TableColumn>
-                <TableColumn key="amount">MONTO</TableColumn>
-                <TableColumn key="type">TIPO</TableColumn>
-                <TableColumn key="datetime">FECHA</TableColumn>
-                <TableColumn key="currency">DIVISA</TableColumn>
-                <TableColumn key="wallet">CUENTA</TableColumn>
-                <TableColumn key="kind">CATEGORIA</TableColumn>
-            </TableHeader>
-            <TableBody emptyContent={"Consulta vacía"} items={movements}>
-                {(item) => (
-                    <TableRow key={item.name}>
-                        {(columnKey) => <TableCell>{getKeyValue(item, columnKey)}</TableCell>}
-                    </TableRow>
-                )}
-            </TableBody>
-        </Table>
+        <>
+            <Table 
+                isStriped
+                removeWrapper
+                className='w-fit'
+                aria-label="Movements Consult"
+                bottomContent={
+                    <div className="flex w-full justify-center">
+                    <Pagination
+                        isCompact
+                        showControls
+                        showShadow
+                        color="secondary"
+                        page={page}
+                        total={pages}
+                        onChange={(page) => setPage(page)}
+                    />
+                    </div>
+                }
+                classNames={{
+                    wrapper: "min-h-[222px]",
+                }}
+            >
+                <TableHeader>
+                    <TableColumn key="name">NOMBRE</TableColumn>
+                    <TableColumn key="detail">DETALLE</TableColumn>
+                    <TableColumn key="amount">MONTO</TableColumn>
+                    <TableColumn key="type">TIPO</TableColumn>
+                    <TableColumn key="datetime">FECHA</TableColumn>
+                    <TableColumn key="currency">DIVISA</TableColumn>
+                    <TableColumn key="wallet">CUENTA</TableColumn>
+                    <TableColumn key="kind">CATEGORIA</TableColumn>
+                </TableHeader>
+                <TableBody emptyContent={"Consulta vacía"} items={items}>
+                    {(item) => (
+                        <TableRow key={item.id}>
+                            {(columnKey) => (
+                                <TableCell key={columnKey}>
+                                    {getKeyValue(item, columnKey)}
+                                </TableCell>
+                            )}
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table>
+        </>
     )
 }
 

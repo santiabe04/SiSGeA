@@ -4,8 +4,8 @@ import promisePool from '@/app/lib/db'
 
 export async function GET() {
     try {
-      const result = await promisePool.query('SELECT * FROM movements;')
-      const res = await result[0]
+      const result = await promisePool.query('SELECT * FROM movements ORDER BY datetime DESC;')
+      const res = result[0]
       return NextResponse.json({ res }, { status: 200 })
     } catch (err) {
       return NextResponse.json({ res: err }, { status: 500 })
@@ -15,7 +15,7 @@ export async function GET() {
 export async function POST(req) {
   try {
     // Lock tables
-    await promisePool.query('LOCK TABLES movements WRITE, wallets WRITE;');
+    await promisePool.query('LOCK TABLES movements WRITE, wallets WRITE;')
 
     const { name,detail,amount,type,wallet,kind } = await req.json()
 
@@ -32,16 +32,16 @@ export async function POST(req) {
     // Update wallet balance
     var updateResult
     if(type == 0) {
-      updateResult = await promisePool.query('UPDATE wallets SET balance = balance - ? WHERE id = ?;', [amount, wallet]);
+      updateResult = await promisePool.query('UPDATE wallets SET balance = balance - ? WHERE id = ?;', [amount, wallet])
     }
     else {
-      updateResult = await promisePool.query('UPDATE wallets SET balance = balance + ? WHERE id = ?;', [amount, wallet]);
+      updateResult = await promisePool.query('UPDATE wallets SET balance = balance + ? WHERE id = ?;', [amount, wallet])
     }
 
-    const updateRes = await updateResult[0];
+    const updateRes = await updateResult[0]
 
     // Unlock tables
-    await promisePool.query('UNLOCK TABLES;');
+    await promisePool.query('UNLOCK TABLES;')
 
     const res = await result[0]
     return NextResponse.json({ res, updateRes }, { status: 200 })
