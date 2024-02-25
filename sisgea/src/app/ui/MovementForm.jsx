@@ -49,12 +49,13 @@ function MovementFormComponent({ wallets, kinds }) {
   }
   /*Checks Amount*/
   const handleAmountChange = (e) => {
-    if(parseInt(e.target.value) <= 0 || parseInt(e.target.value) > limitAmount) {
-      setInvalidAmount(true)
-    }
-    else {
+    const value = e.target.value
+    const floatValue = parseFloat(value)
+    if (!isNaN(floatValue) && floatValue > 0 && floatValue <= limitAmount) {
       setInvalidAmount(false)
-      setAmount(parseInt(e.target.value))
+      setAmount(parseFloat(floatValue.toFixed(2)))
+    } else {
+      setInvalidAmount(true)
     }
   }
   /*Checks Type*/
