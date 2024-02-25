@@ -60,7 +60,7 @@ function MovementFormComponent({ wallets, kinds }) {
   }
   /*Checks Type*/
   const handleTypeChange = (e) => {
-    if(parseInt(e.target.value) == 0) {
+    if(parseInt(e.target.value) != 0 && parseInt(e.target.value) != 1) {
       setInvalidType(true)
     }
     else {
@@ -100,6 +100,17 @@ function MovementFormComponent({ wallets, kinds }) {
       alert("Ocurrió un error")
     }
     toFinance()
+  }
+
+  /*Handle Cancel*/
+  const handleCancel = async (e) => {
+    e.preventDefault()
+
+    const response = confirm("Seguro que desea cancelar?")
+
+    if (response) {
+      toFinance()
+    }
   }
 
   return (
@@ -227,7 +238,7 @@ function MovementFormComponent({ wallets, kinds }) {
             <br />
 
             <Button size="lg" type="submit" className="mr-2">Cargar</Button>
-            <Button size="lg" type="button" color="danger">Cancelar</Button>
+            <Button size="lg" type="button" color="danger" onClick={handleCancel}>Cancelar</Button>
 
           </form>
         </>
