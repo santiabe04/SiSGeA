@@ -1,8 +1,23 @@
 'use server'
 
+/* GETS */
 /*getAllMovements*/
 export const getAllMovements = async () => {
     const resultOri = await fetch('http://localhost:3000/api/movements')
+    const result = await resultOri.json()
+    return result.res
+}
+
+/* POSTS */
+/*getMovementsBy*/
+export const getMovementsBy = async (params) => {
+    const resultOri = await fetch('http://localhost:3000/api/movements/by', {
+        method: 'POST',
+        body: JSON.stringify(params),
+        headers: {
+            'Content-Type':'application/json',
+        }
+    })
     const result = await resultOri.json()
     return result.res
 }

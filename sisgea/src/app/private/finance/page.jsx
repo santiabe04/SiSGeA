@@ -1,3 +1,5 @@
+import { getAllCurrencies } from "@/app/lib/services/currencies.service"
+import { getAllWallets } from "@/app/lib/services/wallets.service"
 import { CardCurrencyBalance } from "@/app/ui/Card"
 import StructureCardComponent from "@/app/ui/StructureCard"
 
@@ -5,8 +7,9 @@ export const metadata = {
     title: 'SiSGeA - Finanzas',
 }
 
-function FinancesPage() {
-  const list = []
+async function FinancesPage() {
+  const currenciesList = await getAllCurrencies()
+  const walletList = await getAllWallets()
 
   return (
     <>
@@ -16,15 +19,16 @@ function FinancesPage() {
         {
           <>
             {
-              list && list.length > 0 && list.map((item, index) => (
+              currenciesList && currenciesList.length > 0 && currenciesList.map((currency, index) => (
                 <CardCurrencyBalance
-                    item={item}
+                    currency={currency}
+                    wallets={walletList.find(x => x.currency = currency.id)}
                     key={index}
                 />
               ))
             }
             {
-              !list || list.length <= 0 && (<h1>No hay divisas cargadas</h1>)
+              !currenciesList || currenciesList.length <= 0 && (<h1>No hay divisas cargadas</h1>)
             }
           </>
         }

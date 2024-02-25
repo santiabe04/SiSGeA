@@ -4,10 +4,9 @@ import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react"
 import StructureComponent from "./Structure"
 import React, { useState } from 'react'
 import { newMovement } from "@/app/lib/services/movements.service"
-import { redirect } from "next/navigation"
 import { toFinance } from "../lib/redirects"
 
-function MovementFormComponent({ currencies, wallets, kinds }) {
+function MovementFormComponent({ wallets, kinds }) {
   /*Fields Value Limits from the db*/
   const limitAmount = 99999999999999999999.99
   const limitName = 45
@@ -22,8 +21,6 @@ function MovementFormComponent({ currencies, wallets, kinds }) {
   const [invalidAmount, setInvalidAmount] = useState(false)
   const [type, setType] = useState(0)
   const [invalidType, setInvalidType] = useState(false)
-  const [currency, setCurrency] = useState(1)
-  const [invalidCurrency, setInvalidCurrency] = useState(false)
   const [wallet, setWallet] = useState(1)
   const [invalidWallet, setInvalidWallet] = useState(false)
   const [kind, setKind] = useState(0)
@@ -70,16 +67,6 @@ function MovementFormComponent({ currencies, wallets, kinds }) {
       setType(parseInt(e.target.value))
     }
   }
-  /*Checks Currency*/
-  const handleCurrencyChange = (e) => {
-    if(parseInt(e.target.value) == 0) {
-      setInvalidCurrency(true)
-    }
-    else {
-      setInvalidCurrency(false)
-      setCurrency(parseInt(e.target.value))
-    }
-  }
   /*Checks Wallet*/
   const handleWalletChange = (e) => {
     if(parseInt(e.target.value) == 0) {
@@ -96,7 +83,6 @@ function MovementFormComponent({ currencies, wallets, kinds }) {
       setInvalidKind(true)
     }
     else {
-      setInvalidCurrency(false)
       setKind(parseInt(e.target.value))
     }
   }
@@ -105,8 +91,13 @@ function MovementFormComponent({ currencies, wallets, kinds }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const result = await newMovement({name,detail,type,amount,currency,wallet,kind})
-    alert(result)
+    const result = await newMovement({name,detail,type,amount,wallet,kind})
+    if(result) {
+      alert("Creado con éxito")
+    }
+    else {
+      alert("Ocurrió un error")
+    }
     toFinance()
   }
 
@@ -147,52 +138,25 @@ function MovementFormComponent({ currencies, wallets, kinds }) {
               className="p-2"
             />
 
-            {/*Amount and Currency*/}
-            <div className="flex flex-col items-center justify-center">
-              <div className="grid grid-cols-2">
-                {/*Amount Input*/}
-                <Input
-                    isRequired
-                    label="Monto"
-                    placeholder="0.00"
-                    labelPlacement="outside"
-                    onChange={handleAmountChange}
-                    isInvalid={invalidAmount}
-                    color={invalidAmount ? "danger" : ""}
-                    errorMessage={invalidAmount && "Ingrese un monto válido"}
-                    startContent={
-                        <div className="pointer-events-none flex items-center">
-                            <span className="text-default-400 text-small">$</span>
-                        </div>
-                    }
-                    type="number"
-                    size="lg"
-                    className="p-2"
-                />
-
-                {/*Currency Select*/}
-                <Select
-                  isRequired
-                  label="Divisa"
-                  placeholder="Seleccione la Divisa"
-                  labelPlacement="outside"
-                  onChange={handleCurrencyChange}
-                  isInvalid={invalidCurrency}
-                  color={invalidCurrency ? "danger" : ""}
-                  errorMessage={invalidCurrency && "Ingrese una divisa válida"}
-                  size="lg"
-                  className="p-2"
-                >
-                  {
-                    currencies.map((currencyItem) => (
-                      <SelectItem key={currencyItem.id} value={currencyItem.id}>
-                        {currencyItem.iso}
-                      </SelectItem>
-                    ))
-                  }
-                </Select>
-              </div>
-            </div>
+            {/*Amount Input*/}
+            <Input
+              isRequired
+              label="Monto"
+              placeholder="0.00"
+              labelPlacement="outside"
+              onChange={handleAmountChange}
+              isInvalid={invalidAmount}
+              color={invalidAmount ? "danger" : ""}
+              errorMessage={invalidAmount && "Ingrese un monto válido"}
+              startContent={
+                <div className="pointer-events-none flex items-center">
+                  <span className="text-default-400 text-small">$</span>
+                </div>
+              }
+              type="number"
+              size="lg"
+              className="p-2"
+            />
 
             {/*Type Select*/}
             <Select

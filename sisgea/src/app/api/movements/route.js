@@ -14,21 +14,37 @@ export async function GET() {
 
 export async function POST(req) {
   try {
-    const { name,detail,amount,type,currency,wallet,kind } = req.body
+    // Lock tables
+    await promisePool.query('LOCK TABLES movements WRITE, wallets WRITE;');
 
-    console.log({ name,detail,amount,type,currency,wallet,kind })
+    const { name,detail,amount,type,wallet,kind } = await req.json()
 
-    // var result
-    // if(detail) {
-    //   result = await promisePool.query('INSERT INTO movements (name,detail,amount,type,currency,wallet,kind) VALUES (?,?,?,?,?,?,?);',[])
-    // }
-    // else {
-    //   result = await promisePool.query('INSERT INTO movements (name,amount,type,currency,wallet,kind) VALUES (?,?,?,?,?,?);',[])
-    // }
+    const currency = await promisePool.query('SELECT currency FROM wallets WHERE id = ?;',[wallet])
 
-    // const res = await result[0]
-    // return NextResponse.json({ res }, { status: 200 })
-    return NextResponse.json({ res:"Ok" }, { status: 200 })
+    var result
+    if(detail) {
+      result = await promisePool.query('INSERT INTO movements (name,detail,amount,type,currency,wallet,kind) VALUES (?,?,?,?,?,?,?);',[name,detail,amount,type,currency[0][0].currency,wallet,kind])
+    }
+    else {
+      result = await promisePool.query('INSERT INTO movements (name,amount,type,currency,wallet,kind) VALUES (?,?,?,?,?,?);',[name,amount,type,currency[0][0].currency,wallet,kind])
+    }
+
+    // Update wallet balance
+    var updateResult
+    if(type == 0) {
+      updateResult = await promisePool.query('UPDATE wallets SET balance = balance - ? WHERE id = ?;', [amount, wallet]);
+    }
+    else {
+      updateResult = await promisePool.query('UPDATE wallets SET balance = balance + ? WHERE id = ?;', [amount, wallet]);
+    }
+
+    const updateRes = await updateResult[0];
+
+    // Unlock tables
+    await promisePool.query('UNLOCK TABLES;');
+
+    const res = await result[0]
+    return NextResponse.json({ res, updateRes }, { status: 200 })
   } catch (err) {
     return NextResponse.json({ res: err }, { status: 500 })
   }
