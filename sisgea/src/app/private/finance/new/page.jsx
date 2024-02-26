@@ -3,7 +3,7 @@ import { getAllWallets } from "@/app/lib/services/wallets.service"
 import MovementFormComponent from "@/app/ui/MovementForm"
 
 export const metadata = {
-    title: 'SiSGeA - Finanzas - Nuevo Movimiento',
+  title: 'SiSGeA - Finanzas - Nuevo Movimiento',
 }
 
 async function NewMovementPage() {

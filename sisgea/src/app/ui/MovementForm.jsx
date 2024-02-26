@@ -4,13 +4,15 @@ import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react"
 import StructureComponent from "./Structure"
 import React, { useState } from 'react'
 import { newMovement } from "@/app/lib/services/movements.service"
-import { toFinance } from "../lib/redirects"
+import { useRouter } from "next/navigation"
 
 function MovementFormComponent({ wallets, kinds }) {
   /*Fields Value Limits from the db*/
   const limitAmount = 99999999999999999999.99
   const limitName = 45
   const limitDetail = 255
+
+  const router = useRouter()
 
   /*Fields States*/
   const [name, setName] = useState("")
@@ -99,7 +101,8 @@ function MovementFormComponent({ wallets, kinds }) {
     else {
       alert("Ocurrió un error")
     }
-    toFinance()
+    
+    router.push("/private/finance")
   }
 
   /*Handle Cancel*/
@@ -109,7 +112,7 @@ function MovementFormComponent({ wallets, kinds }) {
     const response = confirm("Seguro que desea cancelar?")
 
     if (response) {
-      toFinance()
+      router.push("/private/finance")
     }
   }
 
