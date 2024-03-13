@@ -3,7 +3,7 @@
 /* GETS */
 /*getAllMovements*/
 export const getAllMovements = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/movements')
+    const resultOri = await fetch('http://localhost:3000/api/finance/movements')
     const result = await resultOri.json()
     return result.res
 }
@@ -11,7 +11,7 @@ export const getAllMovements = async () => {
 /* POSTS */
 /*getMovementsBy*/
 export const getMovementsBy = async (params) => {
-    const resultOri = await fetch('http://localhost:3000/api/movements/by', {
+    const resultOri = await fetch('http://localhost:3000/api/finance/movements/by', {
         method: 'POST',
         body: JSON.stringify(params),
         headers: {
@@ -24,7 +24,7 @@ export const getMovementsBy = async (params) => {
 
 /*newMovement*/
 export const newMovement = async (movement) => {
-    const resultOri = await fetch('http://localhost:3000/api/movements', {
+    const resultOri = await fetch('http://localhost:3000/api/finance/movements', {
         method: 'POST',
         body: JSON.stringify(movement),
         headers: {

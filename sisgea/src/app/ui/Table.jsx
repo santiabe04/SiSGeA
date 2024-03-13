@@ -3,9 +3,8 @@
 import { Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, getKeyValue } from '@nextui-org/react'
 import React, { useMemo, useState } from 'react'
 
-function MovementsTableComponent({ data }) {
+function TableComponent({ data, rowsPerPage, title, columns }) {
     const [page, setPage] = useState(1)
-    const rowsPerPage = 10
 
     const pages = Math.ceil(data.length / rowsPerPage)
 
@@ -22,7 +21,7 @@ function MovementsTableComponent({ data }) {
                 isStriped
                 removeWrapper
                 className='w-fit'
-                aria-label="Movements Consult"
+                aria-label={title}
                 bottomContent={
                     <div className="flex w-full justify-center">
                     <Pagination
@@ -41,14 +40,11 @@ function MovementsTableComponent({ data }) {
                 }}
             >
                 <TableHeader>
-                    <TableColumn key="name">NOMBRE</TableColumn>
-                    <TableColumn key="detail">DETALLE</TableColumn>
-                    <TableColumn key="amount">MONTO</TableColumn>
-                    <TableColumn key="type">TIPO</TableColumn>
-                    <TableColumn key="datetime">FECHA</TableColumn>
-                    <TableColumn key="currency">DIVISA</TableColumn>
-                    <TableColumn key="wallet">CUENTA</TableColumn>
-                    <TableColumn key="kind">CATEGORIA</TableColumn>
+                    {
+                        columns.map((column) => (
+                            <TableColumn key={column.key}>{column.label}</TableColumn>
+                        ))
+                    }
                 </TableHeader>
                 <TableBody emptyContent={"Consulta vacía"} items={items}>
                     {(item) => (
@@ -66,4 +62,4 @@ function MovementsTableComponent({ data }) {
     )
 }
 
-export default MovementsTableComponent
+export default TableComponent

@@ -3,7 +3,7 @@
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react"
 import StructureComponent from "./Structure"
 import React, { useState } from 'react'
-import { newMovement } from "@/app/lib/services/movements.service"
+import { newMovement } from "@/app/lib/services/finance/movements.service"
 import { useRouter } from "next/navigation"
 
 function MovementFormComponent({ wallets, kinds }) {

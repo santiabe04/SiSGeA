@@ -1,9 +1,9 @@
-import { getAllCurrencies } from "@/app/lib/services/currencies.service"
-import { getAllKinds } from "@/app/lib/services/movementkinds.service"
-import { getAllMovements } from "@/app/lib/services/movements.service"
-import { getAllWallets } from "@/app/lib/services/wallets.service"
-import MovementsTableComponent from "@/app/ui/MovementsTable"
+import { getAllCurrencies } from "@/app/lib/services/finance/currencies.service"
+import { getAllMovementKinds } from "@/app/lib/services/finance/movementkinds.service"
+import { getAllMovements } from "@/app/lib/services/finance/movements.service"
+import { getAllWallets } from "@/app/lib/services/finance/wallets.service"
 import StructureComponent from "@/app/ui/Structure"
+import TableComponent from "@/app/ui/Table"
 
 export const metadata = {
     title: 'SiSGeA - Finanzas - Consultar Movimientos',
@@ -25,7 +25,7 @@ async function ConsultMovementPage() {
     const movements = await getAllMovements()
     const currencies = await getAllCurrencies()
     const wallets = await getAllWallets()
-    const kinds = await getAllKinds()
+    const kinds = await getAllMovementKinds()
 
     const formatCurrency = (currency) => {
         const currencyMatch = currencies.find(x => x.id == currency)
@@ -52,11 +52,22 @@ async function ConsultMovementPage() {
         kind: formatKind(item.kind)
     }))
 
+    const columns = [
+        {key:"name",label:"NOMBRE"},
+        {key:"detail",label:"DETALLE"},
+        {key:"amount",label:"MONTO"},
+        {key:"type",label:"TIPO"},
+        {key:"datetime",label:"FECHA"},
+        {key:"currency",label:"DIVISA"},
+        {key:"wallet",label:"CUENTA"},
+        {key:"kind",label:"CATEGORIA"}
+    ]
+
     return (
         <>
             <StructureComponent
                 title="Consultar Movimientos"
-                content={(<MovementsTableComponent data={formattedData} />)}
+                content={(<TableComponent data={formattedData} rowsPerPage={10} title={"Consultar Movimientos"} columns={columns} />)}
             />
         </>
     )
