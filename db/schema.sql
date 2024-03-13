@@ -29,10 +29,29 @@ CREATE TABLE movements (
     name VARCHAR(45) NOT NULL,
     detail TINYTEXT,
     amount DECIMAL(20,2) NOT NULL,
-    type BIT NOT NULL,
+    type INT NOT NULL,
     datetime DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     currency INT NOT NULL,
     --user INT NOT NULL,
     wallet INT NOT NULL,
+    kind INT NOT NULL
+);
+
+--EVENT_KINDS
+CREATE TABLE event_kinds (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(45) NOT NULL,
+    detail TINYTEXT
+);
+
+--EVENTS
+CREATE TABLE events (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(45) NOT NULL,
+    detail TINYTEXT,
+    date DATE NOT NULL,
+    date_end DATE NOT NULL,
+    time TIME NOT NULL,
+    time_end TIME NOT NULL,
     kind INT NOT NULL
 );
