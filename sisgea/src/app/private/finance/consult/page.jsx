@@ -60,7 +60,7 @@ async function ConsultMovementPage() {
         {key:"datetime",label:"FECHA"},
         {key:"currency",label:"DIVISA"},
         {key:"wallet",label:"CUENTA"},
-        {key:"kind",label:"CATEGORIA"}
+        {key:"kind",label:"CATEGORÍA"}
     ]
 
     return (

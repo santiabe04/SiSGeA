@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'SiSGeA - Eventos',
+  title: 'SiSGeA - Calendario',
 }
 
 function EventsPage() {
