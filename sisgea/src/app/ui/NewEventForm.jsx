@@ -111,7 +111,7 @@ const handleEndTimeChange = (e) => {
       alert("Ocurrió un error")
     }
     
-    router.push("/private/events")
+    router.push("/private/calendar/events")
   }
 
   /*Handle Cancel*/
@@ -121,7 +121,7 @@ const handleEndTimeChange = (e) => {
     const response = confirm("Seguro que desea cancelar?")
 
     if (response) {
-        router.push("/private/events")
+        router.push("/private/calendar/events")
     }
   }
 
