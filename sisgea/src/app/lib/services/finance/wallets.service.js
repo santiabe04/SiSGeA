@@ -1,3 +1,5 @@
+'use server'
+
 /*getAllWallets*/
 export const getAllWallets = async () => {
     const resultOri = await fetch('http://localhost:3000/api/finance/wallets')
