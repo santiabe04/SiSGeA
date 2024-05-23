@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from 'next/server';
 
-import promisePool from '@/app/lib/db'
+import promisePool from '@/app/lib/db';
 
 export async function GET() {
   try {

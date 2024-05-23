@@ -1,8 +1,8 @@
 'use server'
 
-import { newInventory } from "@/app/lib/services/intendance/inventory.service";
-import { getAllInventoryLocations } from "@/app/lib/services/intendance/inventorylocations.service";
 import { getAllSupplyKinds } from "@/app/lib/services/intendance/supplykinds.service";
+import { getAllInventoryLocations } from "@/app/lib/services/intendance/inventorylocations.service";
+import { newInventory } from "@/app/lib/services/intendance/inventory.service";
 import FormStructureComponent from "@/app/ui/FormStructure";
 
 async function NewInventoryPage() {

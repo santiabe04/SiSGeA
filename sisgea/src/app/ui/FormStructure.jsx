@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall }) {
     const router = useRouter();
 
-    const values = fields.map((field) => ({ name: field.name, value: null }));
+    const values = fields.map((field) => ({ name: field.name, type: field.type, value: null }));
 
     const changeHandler = (fieldName, value) => {
         const fieldIndex = fields.findIndex(x => x.name == fieldName);
@@ -23,7 +23,7 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall })
         const result = await submitAPICall(values)
 
         if(result) {
-            alert("Creado con éxito");
+            alert("La operación finalizó con éxito");
         }
         else {
             alert("Ocurrió un error");
@@ -68,7 +68,7 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall })
                             );
                         }
 
-                        if (field.type === "detail") {
+                        if (field.type === "textarea") {
                             return (
                                 <Textarea
                                     key={index}
