@@ -55,3 +55,35 @@ CREATE TABLE events (
     time_end TIME NOT NULL,
     kind INT NOT NULL
 );
+
+--MEASUREMENT_UNITS
+CREATE TABLE measurement_units (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(45) NOT NULL,
+    detail TINYTEXT,
+    short VARCHAR(4) NOT NULL
+);
+
+--SUPPLY_KINDS
+CREATE TABLE supply_kinds (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(45) NOT NULL,
+    detail TINYTEXT,
+    measurement_unit INT NOT NULL
+);
+
+--INVENTORY_LOCATIONS
+CREATE TABLE inventory_locations (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(45) NOT NULL,
+    detail TINYTEXT
+);
+
+--INVENTORY
+CREATE TABLE inventory (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    supply_kind INT NOT NULL,
+    location INT NOT NULL,
+    quantity DECIMAL(20,2) NOT NULL,
+    update_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
