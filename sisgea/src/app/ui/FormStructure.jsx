@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall }) {
     const router = useRouter();
 
-    const values = fields.map((field) => ({ name: field.name, type: field.type, value: null }));
+    const values = fields.map((field) => ({ name: field.name, type: field.type, isRequired: field.isRequired, value: null }));
 
     const changeHandler = (fieldName, value) => {
         const fieldIndex = fields.findIndex(x => x.name == fieldName);

@@ -16,11 +16,10 @@ export async function POST(req) {
   try {
     const values = await req.json();
 
-    var supply_kind = values.find(x => x.name === 'supply_kind').value;
-    var location = values.find(x => x.name === 'location').value;
-    var quantity = values.find(x => x.name === 'quantity').value;
+    const fields = values.map(item => item.name).join(',');
+    const params = values.map(item => item.value === null ? "null" : item.value && ((item.type === "text" && item.value !== null) || (item.type === "textarea" && item.value !== null) ? `'${item.value}'` : item.value)).join(',');
 
-    var result = await promisePool.query('INSERT INTO inventory (supply_kind,location,quantity) VALUES (?,?,?);',[supply_kind,location,quantity]);
+    var result = await promisePool.query(`INSERT INTO inventory (${fields}) VALUES (${params});`);
 
     const res = await result[0]
     return NextResponse.json({ res }, { status: 200 });

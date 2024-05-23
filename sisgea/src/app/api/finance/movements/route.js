@@ -20,7 +20,17 @@ export async function POST(req) {
     const values = await req.json();
 
     const fields = values.map(item => item.name).join(',');
-    const params = values.map(item => item.value === null ? "null" : item.value && ((item.type === "text" && item.value !== null) || (item.type === "textarea" && item.value !== null) ? `'${item.value}'` : item.value)).join(',');
+    const params = values.map(item => {
+      if(!item.isRequired && (item.value?.trim() === "" || item.value === null)) {
+        return "null";
+      }
+      else if(item.type === "text" || item.type === "textarea") {
+        return `'${item.value}'`;
+      }
+      else {
+        return item.value;
+      }
+    }).join(',');
 
     const currency = await promisePool.query(`SELECT currency FROM wallets WHERE id = ${values.find(x => x.name === 'wallet').value};`);
 
