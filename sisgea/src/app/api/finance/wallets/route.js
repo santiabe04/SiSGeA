@@ -14,16 +14,26 @@ export async function GET() {
 
 export async function POST(req) {
   try {
-    const { id } = await req.json()
+    const values = await req.json();
 
-    var result
-    if(id) {
-      result = await promisePool.query('SELECT * FROM wallets WHERE currency = ?;',[id])
-    }
+    const fields = values.map(item => item.name).join(',');
+    const params = values.map(item => {
+      if(!item.isRequired && (item.value?.trim() === "" || item.value === null)) {
+        return "null";
+      }
+      else if(item.type === "text" || item.type === "textarea") {
+        return `'${item.value}'`;
+      }
+      else {
+        return item.value;
+      }
+    }).join(',');
 
-    const res = await result[0]
-    return NextResponse.json({ res }, { status: 200 })
+    var result = await promisePool.query(`INSERT INTO wallets (${fields}) VALUES (${params});`);
+
+    const res = await result[0];
+    return NextResponse.json({ res, updateRes }, { status: 200 });
   } catch (err) {
-    return NextResponse.json({ error: err }, { status: 500 })
+    return NextResponse.json({ res: err }, { status: 500 });
   }
 }
