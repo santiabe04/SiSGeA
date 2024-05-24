@@ -6,3 +6,16 @@ export const getAllInventoryLocations = async () => {
     const result = await resultOri.json()
     return result.res
 }
+
+/*newInventoryLocation*/
+export const newInventoryLocation = async (inventoryLocation) => {
+    const resultOri = await fetch('http://localhost:3000/api/intendance/locations', {
+        method: 'POST',
+        body: JSON.stringify(inventoryLocation),
+        headers: {
+            'Content-Type':'application/json',
+        }
+    })
+    const result = await resultOri.json()
+    return result.res
+}
