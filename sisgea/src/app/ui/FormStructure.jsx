@@ -32,7 +32,7 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall })
         router.push(fallbackRoute);
     }
 
-    const Cancel = () => {
+    const Cancel = (e) => {
         e.preventDefault();
 
         const response = confirm("Seguro que desea cancelar?");
