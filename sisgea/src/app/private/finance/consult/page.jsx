@@ -1,9 +1,9 @@
-import { getAllCurrencies } from "@/app/lib/services/finance/currencies.service"
-import { getAllMovementKinds } from "@/app/lib/services/finance/movementkinds.service"
-import { getAllMovements } from "@/app/lib/services/finance/movements.service"
-import { getAllWallets } from "@/app/lib/services/finance/wallets.service"
-import StructureComponent from "@/app/ui/Structure"
-import TableComponent from "@/app/ui/Table"
+import { getAllCurrencies } from "@/app/lib/services/finance/currencies.service";
+import { getAllMovementKinds } from "@/app/lib/services/finance/movementkinds.service";
+import { getAllMovements } from "@/app/lib/services/finance/movements.service";
+import { getAllWallets } from "@/app/lib/services/finance/wallets.service";
+import StructureComponent from "@/app/ui/Structure";
+import TableComponent from "@/app/ui/Table";
 
 export const metadata = {
     title: 'SiSGeA - Finanzas - Consultar Movimientos',
@@ -11,36 +11,36 @@ export const metadata = {
 
 async function ConsultMovementPage() {
     const formatType = (type) => {
-        return `${type == 1 ? "Entrada" : "Salida"}`
-    }
+        return `${type == 1 ? "Entrada" : "Salida"}`;
+    };
 
     const formatDate = (datetime) => {
-        const date = new Date(datetime)
-        const day = String(date.getDate()).padStart(2, '0')
-        const month = String(date.getMonth() + 1).padStart(2, '0')
-        const year = date.getFullYear()
-        return `${day}-${month}-${year}`
-    }
+        const date = new Date(datetime);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
 
-    const movements = await getAllMovements()
-    const currencies = await getAllCurrencies()
-    const wallets = await getAllWallets()
-    const kinds = await getAllMovementKinds()
+    const movements = await getAllMovements();
+    const currencies = await getAllCurrencies();
+    const wallets = await getAllWallets();
+    const kinds = await getAllMovementKinds();
 
     const formatCurrency = (currency) => {
-        const currencyMatch = currencies.find(x => x.id == currency)
-        return `${currencyMatch.name}`
-    }
+        const currencyMatch = currencies.find(x => x.id == currency);
+        return `${currencyMatch.name}`;
+    };
 
     const formatWallet = (wallet) => {
-        const walletMatch = wallets.find(x => x.id == wallet)
-        return `${walletMatch.name}`
-    }
+        const walletMatch = wallets.find(x => x.id == wallet);
+        return `${walletMatch.name}`;
+    };
 
     const formatKind = (kind) => {
-        const kindMatch = kinds.find(x => x.id == kind)
-        return `${kindMatch.name}`
-    }
+        const kindMatch = kinds.find(x => x.id == kind);
+        return `${kindMatch.name}`;
+    };
 
     const formattedData = movements.map(item => ({
         ...item,
@@ -50,7 +50,7 @@ async function ConsultMovementPage() {
         currency: formatCurrency(item.currency),
         wallet: formatWallet(item.wallet),
         kind: formatKind(item.kind)
-    }))
+    }));
 
     const columns = [
         {key:"name",label:"NOMBRE"},
@@ -61,7 +61,7 @@ async function ConsultMovementPage() {
         {key:"currency",label:"DIVISA"},
         {key:"wallet",label:"CUENTA"},
         {key:"kind",label:"CATEGORÍA"}
-    ]
+    ];
 
     return (
         <>
@@ -70,7 +70,7 @@ async function ConsultMovementPage() {
                 content={(<TableComponent data={formattedData} rowsPerPage={10} title={"Consultar Movimientos"} columns={columns} />)}
             />
         </>
-    )
+    );
 }
 
-export default ConsultMovementPage
+export default ConsultMovementPage;
