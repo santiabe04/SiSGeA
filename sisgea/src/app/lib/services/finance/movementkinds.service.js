@@ -2,7 +2,7 @@
 
 /*getAllMovementKinds*/
 export const getAllMovementKinds = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/finance/kinds')
+    const resultOri = await fetch('http://localhost:3000/api/finance/kinds', { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }
@@ -15,7 +15,7 @@ export const newMovementKind = async (movementKind) => {
         headers: {
             'Content-Type':'application/json',
         }
-    })
+    }, { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }

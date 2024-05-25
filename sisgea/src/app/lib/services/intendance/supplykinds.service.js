@@ -2,7 +2,7 @@
 
 /*getAllSupplyKinds*/
 export const getAllSupplyKinds = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/intendance/supplyKinds')
+    const resultOri = await fetch('http://localhost:3000/api/intendance/supplyKinds', { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }
@@ -15,7 +15,7 @@ export const newSupplyKind = async (supplyKind) => {
         headers: {
             'Content-Type':'application/json',
         }
-    })
+    }, { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }

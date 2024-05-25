@@ -2,7 +2,7 @@
 
 /*getAllWallets*/
 export const getAllWallets = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/finance/wallets')
+    const resultOri = await fetch('http://localhost:3000/api/finance/wallets', { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }
@@ -15,7 +15,7 @@ export const getWalletsByCurrency = async (id) => {
         headers: {
             'Content-Type':'application/json',
         }
-    })
+    }, { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }
@@ -28,7 +28,7 @@ export const newWallet = async (wallet) => {
         headers: {
             'Content-Type':'application/json',
         }
-    })
+    }, { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }

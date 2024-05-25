@@ -3,7 +3,7 @@
 /* GETS */
 /*getAllMovements*/
 export const getAllMovements = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/finance/movements')
+    const resultOri = await fetch('http://localhost:3000/api/finance/movements', { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }
@@ -17,7 +17,7 @@ export const getMovementsBy = async (params) => {
         headers: {
             'Content-Type':'application/json',
         }
-    })
+    }, { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }
@@ -30,7 +30,7 @@ export const newMovement = async (movement) => {
         headers: {
             'Content-Type':'application/json',
         }
-    })
+    }, { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }

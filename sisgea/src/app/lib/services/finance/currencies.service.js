@@ -2,7 +2,7 @@
 
 /*getAllCurrencies*/
 export const getAllCurrencies = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/finance/currencies')
+    const resultOri = await fetch('http://localhost:3000/api/finance/currencies', { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }
@@ -15,7 +15,7 @@ export const newCurrency = async (currency) => {
         headers: {
             'Content-Type':'application/json',
         }
-    })
+    }, { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }

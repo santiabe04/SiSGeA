@@ -2,7 +2,7 @@
 
 /*getAllInventoryLocations*/
 export const getAllInventoryLocations = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/intendance/locations')
+    const resultOri = await fetch('http://localhost:3000/api/intendance/locations', { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }
@@ -15,7 +15,7 @@ export const newInventoryLocation = async (inventoryLocation) => {
         headers: {
             'Content-Type':'application/json',
         }
-    })
+    }, { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }
