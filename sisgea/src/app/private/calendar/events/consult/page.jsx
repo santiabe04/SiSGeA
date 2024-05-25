@@ -1,5 +1,6 @@
-import { getAllEvents } from "@/app/lib/services/events/events.service"
-import { getAllEventKinds } from "@/app/lib/services/events/eventskinds.service"
+
+import { deleteEvent, editEvent, getAllEvents } from "@/app/lib/services/calendar/events.service"
+import { getAllEventKinds } from "@/app/lib/services/calendar/eventskinds.service"
 import StructureComponent from "@/app/ui/Structure"
 import TableComponent from "@/app/ui/Table"
 
@@ -42,7 +43,6 @@ async function ConsultEventsPage() {
 
     const formattedData = events.map(item => ({
         ...item,
-        amount: `$ ${item.amount}`,
         date: formatDate(item.date),
         date_end: formatDate(item.date_end),
         time: formatTime(item.time),
@@ -57,14 +57,16 @@ async function ConsultEventsPage() {
         {key:"date_end",label:"FECHA FINALIZACIÓN"},
         {key:"time",label:"HORA"},
         {key:"time_end",label:"HORA FINALIZACIÓN"},
-        {key:"kind",label:"CATEGORÍA"}
+        {key:"kind",label:"CATEGORÍA"},
+        {key:"edit",label:"EDITAR"},
+        {key:"delete",label:"ELIMINAR"}
     ]
 
     return (
         <>
             <StructureComponent
                 title="Consultar Eventos"
-                content={(<TableComponent data={formattedData} rowsPerPage={10} title={"Consultar Eventos"} columns={columns} />)}
+                content={(<TableComponent data={formattedData} rowsPerPage={10} title={"Consultar Eventos"} columns={columns} editAPICall={editEvent} deleteAPICall={deleteEvent} />)}
             />
         </>
     )
