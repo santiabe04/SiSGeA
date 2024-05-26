@@ -2,15 +2,9 @@ import { NextResponse } from 'next/server'
 
 import promisePool from '@/app/lib/db'
 
-export async function POST(req) {
+export async function GET() {
   try {
-    const { id } = await req.json()
-
-    var result
-    if(id) {
-      result = await promisePool.query('SELECT * FROM wallets WHERE currency = ?;',[id])
-    }
-
+    const result = await promisePool.query('SELECT * FROM wallets WHERE disabledStatus = 0;')
     const res = await result[0]
     return NextResponse.json({ res }, { status: 200 })
   } catch (err) {

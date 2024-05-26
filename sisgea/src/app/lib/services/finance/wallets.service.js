@@ -7,15 +7,9 @@ export const getAllWallets = async () => {
     return result.res
 }
 
-/*getWalletsByCurrency*/
-export const getWalletsByCurrency = async (id) => {
-    const resultOri = await fetch('http://localhost:3000/api/finance/wallets/by',{
-        method: 'POST',
-        body: JSON.stringify(id),
-        headers: {
-            'Content-Type':'application/json',
-        }
-    }, { cache: 'no-store' })
+/*getAllEnabledWallets*/
+export const getAllEnabledWallets = async () => {
+    const resultOri = await fetch('http://localhost:3000/api/finance/wallets/enabled', { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }

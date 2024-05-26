@@ -1,11 +1,11 @@
 'use server'
 
-import { getAllCurrencies } from "@/app/lib/services/finance/currencies.service";
+import { getAllEnabledCurrencies } from "@/app/lib/services/finance/currencies.service";
 import { newWallet } from "@/app/lib/services/finance/wallets.service";
 import FormStructureComponent from "@/app/ui/FormStructure";
 
 async function NewWalletPage() {
-  const currenciesDBList = await getAllCurrencies();
+  const currenciesDBList = await getAllEnabledCurrencies();
   const currenciesList = currenciesDBList.map((field) => ({ id: field.id, label: field.name }));
 
   const fields = [

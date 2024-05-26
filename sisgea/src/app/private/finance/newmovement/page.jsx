@@ -1,7 +1,7 @@
 'use server'
 
-import { getAllWallets } from "@/app/lib/services/finance/wallets.service";
-import { getAllMovementKinds } from "@/app/lib/services/finance/movementkinds.service";
+import { getAllEnabledWallets } from "@/app/lib/services/finance/wallets.service";
+import { getAllEnabledMovementKinds } from "@/app/lib/services/finance/movementkinds.service";
 import { newMovement } from "@/app/lib/services/finance/movements.service";
 import FormStructureComponent from "@/app/ui/FormStructure";
 
@@ -10,9 +10,9 @@ async function NewMovementPage() {
     { id: 0, label: "Salida" },
     { id: 1, label: "Entrada" }
   ];
-  const walletsDBList = await getAllWallets();
+  const walletsDBList = await getAllEnabledWallets();
   const walletsList = walletsDBList.map((field) => ({ id: field.id, label: field.name }));
-  const kindsDBList = await getAllMovementKinds();
+  const kindsDBList = await getAllEnabledMovementKinds();
   const kindsList = kindsDBList.map((field) => ({ id: field.id, label: field.name }));
 
   const fields = [

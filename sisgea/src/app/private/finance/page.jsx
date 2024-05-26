@@ -1,5 +1,5 @@
-import { getAllCurrencies } from "@/app/lib/services/finance/currencies.service";
-import { getAllWallets } from "@/app/lib/services/finance/wallets.service";
+import { getAllEnabledCurrencies } from "@/app/lib/services/finance/currencies.service";
+import { getAllEnabledWallets } from "@/app/lib/services/finance/wallets.service";
 import FinanceDashboardComponent from "@/app/ui/FinanceDashboard";
 
 export const metadata = {
@@ -8,8 +8,8 @@ export const metadata = {
 
 async function FinancesPage() {
 
-  const currenciesList = await getAllCurrencies();
-  const walletList = await getAllWallets();
+  const currenciesList = await getAllEnabledCurrencies();
+  const walletList = await getAllEnabledWallets();
   
   return(
     <>
