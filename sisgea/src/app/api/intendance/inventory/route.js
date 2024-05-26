@@ -14,15 +14,31 @@ export async function GET() {
 
 export async function POST(req) {
   try {
+    // Lock tables
+    await promisePool.query('LOCK TABLES inventory WRITE, inventory_locations WRITE, supply_kinds WRITE;');
+
     const values = await req.json();
 
     const fields = values.map(item => item.name).join(',');
     const params = values.map(item => item.value === null ? "null" : item.value && ((item.type === "text" && item.value !== null) || (item.type === "textarea" && item.value !== null) ? `'${item.value}'` : item.value)).join(',');
 
-    var result = await promisePool.query(`INSERT INTO inventory (${fields}) VALUES (${params});`);
+    const locationCheck = await promisePool.query(`SELECT EXISTS(SELECT 1 FROM inventory_locations WHERE id = ${values.find(x => x.name === 'location').value} AND disabledStatus = 0);`);
+    const supply_kindCheck = await promisePool.query(`SELECT EXISTS(SELECT 1 FROM supply_kinds WHERE id = ${values.find(x => x.name === 'supply_kind').value} AND disabledStatus = 0);`);
 
-    const res = await result[0]
-    return NextResponse.json({ res }, { status: 200 });
+    if(Object.values(locationCheck[0][0])[0] != 0 && Object.values(supply_kindCheck[0][0])[0] != 0) {
+      var result = await promisePool.query(`INSERT INTO inventory (${fields}) VALUES (${params});`);
+      
+      // Unlock tables
+      await promisePool.query('UNLOCK TABLES;');
+
+      const res = await result[0];
+      return NextResponse.json({ res }, { status: 200 });
+    }
+    else {
+      // Unlock tables
+      await promisePool.query('UNLOCK TABLES;');
+      return NextResponse.json({ res: "Código Inhabilitado" }, { status: 500 });
+    }
   } catch (err) {
     return NextResponse.json({ res: err }, { status: 500 });
   }
