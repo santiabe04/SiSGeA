@@ -8,6 +8,13 @@ export const getAllInventory = async () => {
     return result.res;
 }
 
+/*getAllEnabledInventory*/
+export const getAllEnabledInventory = async () => {
+    const resultOri = await fetch('http://localhost:3000/api/intendance/inventory/enabled');
+    const result = await resultOri.json();
+    return result.res;
+}
+
 /* POSTS */
 /*newInventory*/
 export const newInventory = async (inventory) => {

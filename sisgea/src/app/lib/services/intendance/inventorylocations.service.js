@@ -7,6 +7,13 @@ export const getAllInventoryLocations = async () => {
     return result.res
 }
 
+/*getAllEnabledInventoryLocations*/
+export const getAllEnabledInventoryLocations = async () => {
+    const resultOri = await fetch('http://localhost:3000/api/intendance/locations', { cache: 'no-store' })
+    const result = await resultOri.json()
+    return result.res
+}
+
 /*newInventoryLocation*/
 export const newInventoryLocation = async (inventoryLocation) => {
     const resultOri = await fetch('http://localhost:3000/api/intendance/locations', {

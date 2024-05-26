@@ -1,5 +1,5 @@
 
-import { deleteEvent, editEvent, getAllEvents } from "@/app/lib/services/calendar/events.service"
+import { deleteEvent, editEvent, getAllEnabledEvents } from "@/app/lib/services/calendar/events.service"
 import { getAllEventKinds } from "@/app/lib/services/calendar/eventskinds.service"
 import StructureComponent from "@/app/ui/Structure"
 import TableComponent from "@/app/ui/Table"
@@ -33,7 +33,7 @@ async function ConsultEventsPage() {
         return time
     }
 
-    const events = await getAllEvents()
+    const events = await getAllEnabledEvents()
     const kinds = await getAllEventKinds()
 
     const formatKind = (kind) => {

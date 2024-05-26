@@ -1,14 +1,14 @@
 'use server'
 
-import { getAllSupplyKinds } from "@/app/lib/services/intendance/supplykinds.service";
-import { getAllInventoryLocations } from "@/app/lib/services/intendance/inventorylocations.service";
+import { getAllEnabledSupplyKinds } from "@/app/lib/services/intendance/supplykinds.service";
+import { getAllEnabledInventoryLocations } from "@/app/lib/services/intendance/inventorylocations.service";
 import { newInventory } from "@/app/lib/services/intendance/inventory.service";
 import FormStructureComponent from "@/app/ui/FormStructure";
 
 async function NewInventoryPage() {
-  const supplyKindsDBList = await getAllSupplyKinds();
+  const supplyKindsDBList = await getAllEnabledSupplyKinds();
   const supplyKindsList = supplyKindsDBList.map((field) => ({ id: field.id, label: field.name }));
-  const inventoryLocationsDBList = await getAllInventoryLocations();
+  const inventoryLocationsDBList = await getAllEnabledInventoryLocations();
   const inventoryLocationsList = inventoryLocationsDBList.map((field) => ({ id: field.id, label: field.name }));
 
   const fields = [

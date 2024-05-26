@@ -1,11 +1,11 @@
 'use server'
 
-import { getAllEventKinds } from "@/app/lib/services/calendar/eventskinds.service";
+import { getAllEnabledEventKinds } from "@/app/lib/services/calendar/eventskinds.service";
 import { newEvent } from "@/app/lib/services/calendar/events.service";
 import FormStructureComponent from "@/app/ui/FormStructure";
 
 async function NewEventPage() {
-  const kindsDBList = await getAllEventKinds();
+  const kindsDBList = await getAllEnabledEventKinds();
   const kindsList = kindsDBList.map((field) => ({ id: field.id, label: field.name }));
 
   const fields = [

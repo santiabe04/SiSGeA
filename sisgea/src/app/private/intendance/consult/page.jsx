@@ -1,4 +1,4 @@
-import { deleteInventory, editInventory, getAllInventory } from "@/app/lib/services/intendance/inventory.service";
+import { deleteInventory, editInventory, getAllEnabledInventory } from "@/app/lib/services/intendance/inventory.service";
 import { getAllInventoryLocations } from "@/app/lib/services/intendance/inventorylocations.service";
 import { getAllSupplyKinds } from "@/app/lib/services/intendance/supplykinds.service";
 import StructureComponent from "@/app/ui/Structure";
@@ -25,7 +25,7 @@ async function ConsultInventoryPage() {
         }
     }
 
-    const inventory = await getAllInventory();
+    const inventory = await getAllEnabledInventory();
     const supplies = await getAllSupplyKinds();
     const inventoryLocations = await getAllInventoryLocations();
 

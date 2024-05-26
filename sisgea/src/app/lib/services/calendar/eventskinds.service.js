@@ -7,6 +7,13 @@ export const getAllEventKinds = async () => {
     return result.res
 }
 
+/*getAllEnabledEventKinds*/
+export const getAllEnabledEventKinds = async () => {
+    const resultOri = await fetch('http://localhost:3000/api/calendar/events/kinds', { cache: 'no-store' })
+    const result = await resultOri.json()
+    return result.res
+}
+
 /* POSTS */
 /*newEventKind*/
 export const newEventKind = async (params) => {

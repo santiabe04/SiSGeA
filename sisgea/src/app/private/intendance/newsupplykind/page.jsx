@@ -1,11 +1,11 @@
 'use server'
 
-import { getAllMeasurementUnits } from "@/app/lib/services/intendance/measurementunits.service";
+import { getAllEnabledMeasurementUnits } from "@/app/lib/services/intendance/measurementunits.service";
 import { newSupplyKind } from "@/app/lib/services/intendance/supplykinds.service";
 import FormStructureComponent from "@/app/ui/FormStructure";
 
 async function NewSupplyKindPage() {
-  const measurementUnitsDBList = await getAllMeasurementUnits();
+  const measurementUnitsDBList = await getAllEnabledMeasurementUnits();
   const measurementUnitsList = measurementUnitsDBList.map((field) => ({ id: field.id, label: field.name }));
 
   const fields = [
