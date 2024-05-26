@@ -6,7 +6,7 @@ export async function POST(req) {
   try {
     const id = await req.json();
 
-    const result = await promisePool.query(`DELETE FROM events WHERE id = ${id};`);
+    const result = await promisePool.query(`UPDATE events SET disabledStatus = 1 WHERE id = ${id};`);
 
     const res = await result[0];
     return NextResponse.json({ res }, { status: 200 });
