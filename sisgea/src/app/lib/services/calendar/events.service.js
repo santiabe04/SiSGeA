@@ -24,9 +24,9 @@ export const newEvent = async (params) => {
         headers: {
             'Content-Type':'application/json',
         }
-    }, { cache: 'no-store' })
-    const result = await resultOri.json()
-    return result.res
+    }, { cache: 'no-store' });
+    const result = await resultOri.json();
+    return result.res;
 }
 
 /*editEvent*/
@@ -37,9 +37,9 @@ export const editEvent = async (params) => {
         headers: {
             'Content-Type':'application/json',
         }
-    }, { cache: 'no-store' })
-    const result = await resultOri.json()
-    return result.res
+    }, { cache: 'no-store' });
+    const result = await resultOri.json();
+    return result.res;
 }
 
 /*deleteEvent*/
@@ -50,7 +50,7 @@ export const deleteEvent = async (id) => {
         headers: {
             'Content-Type':'application/json',
         }
-    }, { cache: 'no-store' })
-    const result = await resultOri.json()
-    return result.res
+    }, { cache: 'no-store' });
+    const result = await resultOri.json();
+    return result.res;
 }
