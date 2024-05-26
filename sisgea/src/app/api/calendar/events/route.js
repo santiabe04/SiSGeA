@@ -14,6 +14,9 @@ export async function GET() {
 
 export async function POST(req) {
   try {
+    // Lock tables
+    await promisePool.query('LOCK TABLES events WRITE, event_kinds WRITE;');
+
     const values = await req.json();
 
     const fields = values.map(item => item.name).join(',');
@@ -32,10 +35,22 @@ export async function POST(req) {
       }
     }).join(',');
 
-    const result = await promisePool.query(`INSERT INTO events (${fields}) VALUES (${params});`);
-    
-    const res = await result[0];
-    return NextResponse.json({ res }, { status: 200 });
+    const kindCheck = await promisePool.query(`SELECT EXISTS(SELECT 1 FROM event_kinds WHERE id = ${values.find(x => x.name === 'kind').value} AND disabledStatus = 0);`);
+
+    if(Object.values(kindCheck[0][0])[0] != 0) {
+      const result = await promisePool.query(`INSERT INTO events (${fields}) VALUES (${params});`);
+      
+      // Unlock tables
+      await promisePool.query('UNLOCK TABLES;');
+
+      const res = await result[0];
+      return NextResponse.json({ res }, { status: 200 });
+    }
+    else {
+      // Unlock tables
+      await promisePool.query('UNLOCK TABLES;');
+      return NextResponse.json({ res: "Código Inhabilitado" }, { status: 500 });
+    }
   } catch (err) {
     return NextResponse.json({ res: err }, { status: 500 });
   }
