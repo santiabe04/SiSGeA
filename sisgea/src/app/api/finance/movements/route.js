@@ -15,7 +15,7 @@ export async function GET() {
 export async function POST(req) {
   try {
     // Lock tables
-    await promisePool.query('LOCK TABLES movements WRITE, wallets WRITE;');
+    await promisePool.query('LOCK TABLES movements WRITE, wallets WRITE, movement_kinds WRITE;');
 
     const values = await req.json();
 
@@ -32,28 +32,32 @@ export async function POST(req) {
       }
     }).join(',');
 
-    const currency = await promisePool.query(`SELECT currency FROM wallets WHERE id = ${values.find(x => x.name === 'wallet').value};`);
+    const currency = await promisePool.query(`SELECT currency FROM wallets WHERE id = ${values.find(x => x.name === 'wallet').value} AND disabledStatus = 0;`);
+    const kindCheck = await promisePool.query(`SELECT EXISTS(SELECT 1 FROM movement_kinds WHERE id = ${values.find(x => x.name === 'kind').value} AND disabledStatus = 0);`);
 
+    if(Object.values(kindCheck[0][0])[0] != 0 && currency[0][0].currency) {
+      var result = await promisePool.query(`INSERT INTO movements (${fields},currency) VALUES (${params},${currency[0][0].currency});`);
 
-    var result = await promisePool.query(`INSERT INTO movements (${fields},currency) VALUES (${params},${currency[0][0].currency});`);
+      // Update wallet balance
+      var updateResult;
+      if(values.find(x => x.name === 'type').value == 0) {
+        updateResult = await promisePool.query(`UPDATE wallets SET balance = balance - ${values.find(x => x.name === 'amount').value} WHERE id = ${values.find(x => x.name === 'wallet').value};`);
+      }
+      else {
+        updateResult = await promisePool.query(`UPDATE wallets SET balance = balance + ${values.find(x => x.name === 'amount').value} WHERE id = ${values.find(x => x.name === 'wallet').value};`);
+      }
+      // Unlock tables
+      await promisePool.query('UNLOCK TABLES;');
 
-    // Update wallet balance
-    var updateResult;
-    if(values.find(x => x.name === 'type').value == 0) {
-      updateResult = await promisePool.query(`UPDATE wallets SET balance = balance - ${values.find(x => x.name === 'amount').value} WHERE id = ${values.find(x => x.name === 'wallet').value};`);
+      const updateRes = await updateResult[0];
+      const res = await result[0];
+      return NextResponse.json({ res, updateRes }, { status: 200 });
     }
     else {
-      updateResult = await promisePool.query(`UPDATE wallets SET balance = balance + ${values.find(x => x.name === 'amount').value} WHERE id = ${values.find(x => x.name === 'wallet').value};`);
+      // Unlock tables
+      await promisePool.query('UNLOCK TABLES;');
+      return NextResponse.json({ res: "Código Inhabilitado" }, { status: 500 });
     }
-
-
-    const updateRes = await updateResult[0];
-
-    // Unlock tables
-    await promisePool.query('UNLOCK TABLES;');
-
-    const res = await result[0];
-    return NextResponse.json({ res, updateRes }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ res: err }, { status: 500 });
   }

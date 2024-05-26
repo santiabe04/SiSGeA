@@ -2,16 +2,16 @@
 
 /*getAllMovementKinds*/
 export const getAllMovementKinds = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/finance/kinds', { cache: 'no-store' })
-    const result = await resultOri.json()
-    return result.res
+    const resultOri = await fetch('http://localhost:3000/api/finance/kinds', { cache: 'no-store' });
+    const result = await resultOri.json();
+    return result.res;
 }
 
 /*getAllEnabledMovementKinds*/
 export const getAllEnabledMovementKinds = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/finance/kinds/enabled', { cache: 'no-store' })
-    const result = await resultOri.json()
-    return result.res
+    const resultOri = await fetch('http://localhost:3000/api/finance/kinds/enabled', { cache: 'no-store' });
+    const result = await resultOri.json();
+    return result.res;
 }
 
 /*newMovementKind*/
@@ -22,7 +22,20 @@ export const newMovementKind = async (movementKind) => {
         headers: {
             'Content-Type':'application/json',
         }
-    }, { cache: 'no-store' })
-    const result = await resultOri.json()
-    return result.res
+    }, { cache: 'no-store' });
+    const result = await resultOri.json();
+    return result.res;
+}
+
+/*deleteMovementKind*/
+export const deleteMovementKind = async (id) => {
+    const resultOri = await fetch('http://localhost:3000/api/finance/kinds/delete', {
+        method: 'POST',
+        body: JSON.stringify(id),
+        headers: {
+            'Content-Type':'application/json',
+        }
+    }, { cache: 'no-store' });
+    const result = await resultOri.json();
+    return result.res;
 }
