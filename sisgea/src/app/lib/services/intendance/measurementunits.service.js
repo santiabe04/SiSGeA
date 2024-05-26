@@ -26,3 +26,16 @@ export const newMeasurementUnit = async (measurementunit) => {
     const result = await resultOri.json();
     return result.res;
 }
+
+/*deleteMeasurementUnit*/
+export const deleteMeasurementUnit = async (id) => {
+    const resultOri = await fetch('http://localhost:3000/api/intendance/measurementUnits/delete', {
+        method: 'POST',
+        body: JSON.stringify(id),
+        headers: {
+            'Content-Type':'application/json',
+        }
+    }, { cache: 'no-store' });
+    const result = await resultOri.json();
+    return result.res;
+}
