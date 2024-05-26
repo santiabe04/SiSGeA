@@ -5,7 +5,8 @@ USE sisgea;
 CREATE TABLE currencies (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(45) NOT NULL,
-    iso CHAR(4) NOT NULL
+    iso CHAR(4) NOT NULL,
+    disabledStatus INT NOT NULL DEFAULT 0
 );
 
 --WALLETS
@@ -13,14 +14,16 @@ CREATE TABLE wallets (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(45) NOT NULL,
     balance DECIMAL(20,2) NOT NULL DEFAULT 0.00,
-    currency INT NOT NULL
+    currency INT NOT NULL,
+    disabledStatus INT NOT NULL DEFAULT 0
 );
 
 --MOVEMENT_KINDS
 CREATE TABLE movement_kinds (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(45) NOT NULL,
-    detail TINYTEXT
+    detail TINYTEXT,
+    disabledStatus INT NOT NULL DEFAULT 0
 );
 
 --MOVEMENTS
@@ -41,7 +44,8 @@ CREATE TABLE movements (
 CREATE TABLE event_kinds (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(45) NOT NULL,
-    detail TINYTEXT
+    detail TINYTEXT,
+    disabledStatus INT NOT NULL DEFAULT 0
 );
 
 --EVENTS
@@ -53,7 +57,8 @@ CREATE TABLE events (
     date_end DATE NOT NULL,
     time TIME NOT NULL,
     time_end TIME NOT NULL,
-    kind INT NOT NULL
+    kind INT NOT NULL,
+    disabledStatus INT NOT NULL DEFAULT 0
 );
 
 --MEASUREMENT_UNITS
@@ -61,7 +66,8 @@ CREATE TABLE measurement_units (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(45) NOT NULL,
     detail TINYTEXT,
-    short VARCHAR(4) NOT NULL
+    short VARCHAR(4) NOT NULL,
+    disabledStatus INT NOT NULL DEFAULT 0
 );
 
 --SUPPLY_KINDS
@@ -69,14 +75,16 @@ CREATE TABLE supply_kinds (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(45) NOT NULL,
     detail TINYTEXT,
-    measurement_unit INT NOT NULL
+    measurement_unit INT NOT NULL,
+    disabledStatus INT NOT NULL DEFAULT 0
 );
 
 --INVENTORY_LOCATIONS
 CREATE TABLE inventory_locations (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(45) NOT NULL,
-    detail TINYTEXT
+    detail TINYTEXT,
+    disabledStatus INT NOT NULL DEFAULT 0
 );
 
 --INVENTORY
@@ -85,5 +93,6 @@ CREATE TABLE inventory (
     supply_kind INT NOT NULL,
     location INT NOT NULL,
     quantity DECIMAL(20,2) NOT NULL,
-    update_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    update_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    disabledStatus INT NOT NULL DEFAULT 0
 );
