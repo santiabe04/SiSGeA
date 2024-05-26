@@ -1,4 +1,4 @@
-import { getAllInventory } from "@/app/lib/services/intendance/inventory.service";
+import { deleteInventory, editInventory, getAllInventory } from "@/app/lib/services/intendance/inventory.service";
 import { getAllInventoryLocations } from "@/app/lib/services/intendance/inventorylocations.service";
 import { getAllSupplyKinds } from "@/app/lib/services/intendance/supplykinds.service";
 import StructureComponent from "@/app/ui/Structure";
@@ -50,14 +50,16 @@ async function ConsultInventoryPage() {
         {key:"supply_kind",label:"ARTÍCULO"},
         {key:"location",label:"UBICACIÓN"},
         {key:"quantity",label:"STOCK"},
-        {key:"update_date",label:"ÚLTIMA FECHA DE ACTUALIZACIÓN"}
+        {key:"update_date",label:"ÚLTIMA FECHA DE ACTUALIZACIÓN"},
+        {key:"edit",label:"EDITAR"},
+        {key:"delete",label:"ELIMINAR"}
     ];
 
     return (
         <>
             <StructureComponent
                 title="Consultar Inventario"
-                content={(<TableComponent data={formattedData} rowsPerPage={10} title={"Consultar Inventario"} columns={columns} />)}
+                content={(<TableComponent data={formattedData} rowsPerPage={10} title={"Consultar Inventario"} columns={columns} editAPICall={editInventory} deleteAPICall={deleteInventory} />)}
             />
         </>
     );
