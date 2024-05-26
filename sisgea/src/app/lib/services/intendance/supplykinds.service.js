@@ -2,16 +2,16 @@
 
 /*getAllSupplyKinds*/
 export const getAllSupplyKinds = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/intendance/supplyKinds', { cache: 'no-store' })
-    const result = await resultOri.json()
-    return result.res
+    const resultOri = await fetch('http://localhost:3000/api/intendance/supplyKinds', { cache: 'no-store' });
+    const result = await resultOri.json();
+    return result.res;
 }
 
 /*getAllEnabledSupplyKinds*/
 export const getAllEnabledSupplyKinds = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/intendance/supplyKinds', { cache: 'no-store' })
-    const result = await resultOri.json()
-    return result.res
+    const resultOri = await fetch('http://localhost:3000/api/intendance/supplyKinds', { cache: 'no-store' });
+    const result = await resultOri.json();
+    return result.res;
 }
 
 /*newSupplyKind*/
@@ -22,7 +22,20 @@ export const newSupplyKind = async (supplyKind) => {
         headers: {
             'Content-Type':'application/json',
         }
-    }, { cache: 'no-store' })
-    const result = await resultOri.json()
-    return result.res
+    }, { cache: 'no-store' });
+    const result = await resultOri.json();
+    return result.res;
+}
+
+/*deleteSupplyKind*/
+export const deleteSupplyKind = async (id) => {
+    const resultOri = await fetch('http://localhost:3000/api/intendance/supplyKinds/delete', {
+        method: 'POST',
+        body: JSON.stringify(id),
+        headers: {
+            'Content-Type':'application/json',
+        }
+    }, { cache: 'no-store' });
+    const result = await resultOri.json();
+    return result.res;
 }
