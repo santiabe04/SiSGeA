@@ -80,7 +80,7 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall, e
                         if (field.type === "text") {
                             return (
                                 <Input
-                                    key={index}
+                                    key={field.label}
                                     isRequired={field.isRequired}
                                     label={field.label}
                                     placeholder={field.label}
@@ -97,7 +97,7 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall, e
                         if (field.type === "textarea") {
                             return (
                                 <Textarea
-                                    key={index}
+                                    key={field.label}
                                     label={field.label}
                                     placeholder={field.label}
                                     labelPlacement="outside"
@@ -113,7 +113,7 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall, e
                         if (field.type === "number" || field.type === "float") {
                             return (
                                 <Input
-                                    key={index}
+                                    key={field.label}
                                     isRequired={field.isRequired}
                                     label={field.label}
                                     placeholder={field.type === "number" ? "0" : "0.00"}
@@ -131,7 +131,7 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall, e
                         if (field.type === "date") {
                             return (
                                 <Input
-                                    key={index}
+                                    key={field.label}
                                     isRequired={field.isRequired}
                                     label={field.label}
                                     labelPlacement="outside"
@@ -147,7 +147,7 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall, e
                         if (field.type === "time") {
                             return (
                                 <Input
-                                    key={index}
+                                    key={field.label}
                                     isRequired={field.isRequired}
                                     label={field.label}
                                     labelPlacement="outside"
@@ -163,12 +163,12 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall, e
                         if (field.type === "select") {
                             return (
                                 <Select
-                                    key={index}
+                                    key={field.label}
                                     isRequired={field.isRequired}
                                     label={field.label}
                                     placeholder={`Seleccione ${field.label}`}
                                     labelPlacement="outside"
-                                    defaultSelectedKeys={field.value || ""}
+                                    defaultSelectedKeys={field.value ? `["${field.value}"]` : "[1]"}
                                     onChange={e => changeHandler(field.name, e.target.value)}
                                     size="lg"
                                     className="p-2"

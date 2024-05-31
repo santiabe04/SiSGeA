@@ -1,5 +1,5 @@
 
-import { deleteEvent, editEvent, getAllEnabledEvents } from "@/app/lib/services/calendar/events.service"
+import { deleteEvent, getAllEnabledEvents } from "@/app/lib/services/calendar/events.service"
 import { getAllEventKinds } from "@/app/lib/services/calendar/eventskinds.service"
 import StructureComponent from "@/app/ui/Structure"
 import TableComponent from "@/app/ui/Table"
@@ -66,7 +66,7 @@ async function ConsultEventsPage() {
         <>
             <StructureComponent
                 title="Consultar Eventos"
-                content={(<TableComponent data={formattedData} rowsPerPage={10} title={"Consultar Eventos"} columns={columns} editAPICall={editEvent} deleteAPICall={deleteEvent} />)}
+                content={(<TableComponent data={formattedData} rowsPerPage={10} title={"Consultar Eventos"} columns={columns} editRoute={"editevent/"} deleteAPICall={deleteEvent} />)}
             />
         </>
     )

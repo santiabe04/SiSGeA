@@ -30,16 +30,16 @@ export const newEvent = async (params) => {
 }
 
 /*editEvent*/
-export const editEvent = async (params) => {
-    const resultOri = await fetch('http://localhost:3000/api/calendar/events/edit', {
+export const editEvent = async (params,id) => {
+    const resultOri = await fetch('http://localhost:3000/api/calendar/events/alter', {
         method: 'POST',
-        body: JSON.stringify(params),
+        body: JSON.stringify({params,id}),
         headers: {
             'Content-Type':'application/json',
         }
     }, { cache: 'no-store' });
     const result = await resultOri.json();
-    return result.res;
+    return result;
 }
 
 /*deleteEvent*/
@@ -53,4 +53,17 @@ export const deleteEvent = async (id) => {
     }, { cache: 'no-store' });
     const result = await resultOri.json();
     return result.res;
+}
+
+/*getEventById*/
+export const getEventById = async (id) => {
+    const resultOri = await fetch('http://localhost:3000/api/calendar/events/byId', {
+        method: 'POST',
+        body: JSON.stringify(id),
+        headers: {
+            'Content-Type':'application/json',
+        }
+    }, { cache: 'no-store' });
+    const result = await resultOri.json();
+    return result;
 }
