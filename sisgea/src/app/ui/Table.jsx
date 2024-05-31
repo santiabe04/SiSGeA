@@ -1,40 +1,34 @@
 "use client"
 
-import { Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip, getKeyValue } from '@nextui-org/react'
-import React, { useMemo, useState } from 'react'
-import { EditIcon } from './EditIcon'
-import { DeleteIcon } from './DeleteIcon'
+import { Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip, getKeyValue } from '@nextui-org/react';
+import React, { useMemo, useState } from 'react';
+import { EditIcon } from './EditIcon';
+import { DeleteIcon } from './DeleteIcon';
+import { useRouter } from 'next/navigation';
 
-function TableComponent({ data, rowsPerPage, title, columns, editAPICall, deleteAPICall }) {
-    const [page, setPage] = useState(1)
+function TableComponent({ data, rowsPerPage, title, columns, editRoute, deleteAPICall }) {
+    const router = useRouter();
 
-    const pages = Math.ceil(data.length / rowsPerPage)
+    const [page, setPage] = useState(1);
+
+    const pages = Math.ceil(data.length / rowsPerPage);
 
     const items = useMemo(() => {
-        const start = (page - 1) * rowsPerPage
-        const end = start + rowsPerPage
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
 
-        return data.slice(start, end)
-    }, [page, data])
+        return data.slice(start, end);
+    }, [page, data]);
 
     const editHandler = async (id) => {
-        // const result = await editAPICall(id)
-
-        // if(result) {
-        //     alert("Se editó con éxito");
-        //     window.location.reload();
-        // }
-        // else {
-        //     alert("Ocurrió un error");
-        // }
-        alert("Ocurrió un error");
+        router.push(editRoute + id);
     }
 
     const deleteHandler = async (id) => {
         const response = confirm("Seguro que desea eliminar?");
 
         if (response) {
-            const result = await deleteAPICall(id)
+            const result = await deleteAPICall(id);
 
             if(result) {
                 alert("Se eliminó con éxito");
@@ -109,4 +103,4 @@ function TableComponent({ data, rowsPerPage, title, columns, editAPICall, delete
     )
 }
 
-export default TableComponent
+export default TableComponent;

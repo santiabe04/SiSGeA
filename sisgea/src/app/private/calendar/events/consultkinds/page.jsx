@@ -25,7 +25,7 @@ async function ConsultEventKindsPage() {
         <>
             <StructureComponent
                 title="Consultar Categorías de Eventos"
-                content={(<TableComponent data={formattedData} rowsPerPage={10} title={"Consultar Categorías de Eventos"} columns={columns} deleteAPICall={deleteEventKind} />)}
+                content={(<TableComponent data={formattedData} rowsPerPage={10} title={"Consultar Categorías de Eventos"} columns={columns} editRoute={"editeventkind/"} deleteAPICall={deleteEventKind} />)}
             />
         </>
     );

@@ -28,6 +28,19 @@ export const newEventKind = async (params) => {
     return result.res;
 }
 
+/*editEventKind*/
+export const editEventKind = async (params,id) => {
+    const resultOri = await fetch('http://localhost:3000/api/calendar/events/kinds/alter', {
+        method: 'POST',
+        body: JSON.stringify({params,id}),
+        headers: {
+            'Content-Type':'application/json',
+        }
+    }, { cache: 'no-store' });
+    const result = await resultOri.json();
+    return result;
+}
+
 /*deleteEventKind*/
 export const deleteEventKind = async (id) => {
     const resultOri = await fetch('http://localhost:3000/api/calendar/events/kinds/delete', {
@@ -39,4 +52,17 @@ export const deleteEventKind = async (id) => {
     }, { cache: 'no-store' });
     const result = await resultOri.json();
     return result.res;
+}
+
+/*getEventKindById*/
+export const getEventKindById = async (id) => {
+    const resultOri = await fetch('http://localhost:3000/api/calendar/events/kinds/byId', {
+        method: 'POST',
+        body: JSON.stringify(id),
+        headers: {
+            'Content-Type':'application/json',
+        }
+    }, { cache: 'no-store' });
+    const result = await resultOri.json();
+    return result;
 }

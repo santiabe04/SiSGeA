@@ -4,10 +4,10 @@ import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import StructureComponent from "./Structure";
 import { useRouter } from "next/navigation";
 
-function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall }) {
+function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall, editID }) {
     const router = useRouter();
 
-    const values = fields.map((field) => ({ name: field.name, type: field.type, isRequired: field.isRequired, value: null }));
+    const values = fields.map((field) => ({ name: field.name, type: field.type, isRequired: field.isRequired, value: field.value || null }));
 
     const changeHandler = (fieldName, value) => {
         const fieldIndex = fields.findIndex(x => x.name == fieldName);
@@ -17,19 +17,44 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall })
         }
     }
 
+    const checkEdited = () => {
+        for(var i = 0; i < values.length; i++) {
+            const fieldIndex = fields.findIndex(x => x.name == values[i].name);
+            if(fields[fieldIndex].value != values[i].value) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     const Submit = async (e) => {
         e.preventDefault();
 
-        const result = await submitAPICall(values)
-
-        if(result) {
-            alert("La operación finalizó con éxito");
+        var result;
+        var notEdited = false;
+        if(editID) {
+            if(checkEdited()) {
+                result = await submitAPICall(values,editID);
+            }
+            else {
+                notEdited = true;
+            }
         }
         else {
-            alert("Ocurrió un error");
+            result = await submitAPICall(values);
         }
-        
-        router.push(fallbackRoute);
+ 
+        if(notEdited) {
+            alert("No se modificaron los valores");
+        }
+        else if(result.res.status == 200) {
+            alert("La operación finalizó con éxito");
+            router.push(fallbackRoute);
+        }
+        else {
+            alert("Ocurrió un error: " + result.res.res);
+        }
     }
 
     const Cancel = (e) => {
@@ -60,6 +85,7 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall })
                                     label={field.label}
                                     placeholder={field.label}
                                     labelPlacement="outside"
+                                    defaultValue={field.value || ""}
                                     onChange={e => changeHandler(field.name, e.target.value)}
                                     type="text"
                                     size="lg"
@@ -75,6 +101,7 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall })
                                     label={field.label}
                                     placeholder={field.label}
                                     labelPlacement="outside"
+                                    defaultValue={field.value || ""}
                                     onChange={e => changeHandler(field.name, e.target.value)}
                                     type="text"
                                     size="lg"
@@ -91,6 +118,7 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall })
                                     label={field.label}
                                     placeholder={field.type === "number" ? "0" : "0.00"}
                                     labelPlacement="outside"
+                                    defaultValue={field.value || ""}
                                     onChange={e => changeHandler(field.name, e.target.value)}
                                     type="number"
                                     size="lg"
@@ -107,6 +135,7 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall })
                                     isRequired={field.isRequired}
                                     label={field.label}
                                     labelPlacement="outside"
+                                    defaultValue={field.value || ""}
                                     onChange={e => changeHandler(field.name, e.target.value)}
                                     type="date"
                                     size="lg"
@@ -122,6 +151,7 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall })
                                     isRequired={field.isRequired}
                                     label={field.label}
                                     labelPlacement="outside"
+                                    defaultValue={field.value || ""}
                                     onChange={e => changeHandler(field.name, e.target.value)}
                                     type="time"
                                     size="lg"
@@ -138,6 +168,7 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall })
                                     label={field.label}
                                     placeholder={`Seleccione ${field.label}`}
                                     labelPlacement="outside"
+                                    defaultSelectedKeys={field.value || ""}
                                     onChange={e => changeHandler(field.name, e.target.value)}
                                     size="lg"
                                     className="p-2"
