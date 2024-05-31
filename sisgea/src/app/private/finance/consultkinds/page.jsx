@@ -1,4 +1,4 @@
-import { deleteMovementKind } from "@/app/lib/services/finance/movementkinds.service";
+import { deleteMovementKind, getAllEnabledMovementKinds } from "@/app/lib/services/finance/movementkinds.service";
 import StructureComponent from "@/app/ui/Structure";
 import TableComponent from "@/app/ui/Table";
 
@@ -8,7 +8,9 @@ export const metadata = {
 
 async function ConsultMovementKindsPage() {
 
-    const formattedData = events.map(item => ({
+    const kinds = await getAllEnabledMovementKinds();
+
+    const formattedData = kinds.map(item => ({
         ...item
     }));
 
