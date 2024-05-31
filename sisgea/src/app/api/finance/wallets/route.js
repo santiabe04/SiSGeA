@@ -14,6 +14,9 @@ export async function GET() {
 
 export async function POST(req) {
   try {
+    // Lock tables
+    await promisePool.query('LOCK TABLES currencies WRITE, wallets WRITE;');
+
     const values = await req.json();
 
     const fields = values.map(item => item.name).join(',');
@@ -29,10 +32,22 @@ export async function POST(req) {
       }
     }).join(',');
 
-    var result = await promisePool.query(`INSERT INTO wallets (${fields}) VALUES (${params});`);
+    const currencyCheck = await promisePool.query(`SELECT EXISTS(SELECT 1 FROM currencies WHERE id = ${values.find(x => x.name === 'currency').value} AND disabledStatus = 0);`);
 
-    const res = await result[0];
-    return NextResponse.json({ res, updateRes }, { status: 200 });
+    if(Object.values(currencyCheck[0][0])[0] != 0) {
+      var result = await promisePool.query(`INSERT INTO wallets (${fields}) VALUES (${params});`);
+
+      // Unlock tables
+      await promisePool.query('UNLOCK TABLES;');
+
+      const res = await result[0];
+      return NextResponse.json({ res }, { status: 200 });
+    }
+    else {
+      // Unlock tables
+      await promisePool.query('UNLOCK TABLES;');
+      return NextResponse.json({ res: "Código Inhabilitado" }, { status: 500 });
+    }
   } catch (err) {
     return NextResponse.json({ res: err }, { status: 500 });
   }

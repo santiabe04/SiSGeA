@@ -1,8 +1,39 @@
 "use client"
 
-import { Card, CardFooter, CardHeader, CardBody } from "@nextui-org/react"
+import { Card, CardFooter, CardHeader, CardBody, Tooltip } from "@nextui-org/react"
+import { EditIcon } from "./EditIcon"
+import { DeleteIcon } from "./DeleteIcon"
+import { deleteWallet } from "../lib/services/finance/wallets.service"
 
 export async function CardWalletBalance({ wallet, currency }) {
+    const editWalletHandler = async (id) => {
+        // const result = await editAPICall(id)
+
+        // if(result) {
+        //     alert("Se editó con éxito");
+        //     window.location.reload();
+        // }
+        // else {
+        //     alert("Ocurrió un error");
+        // }
+        alert("Ocurrió un error");
+    }
+
+    const deleteWalletHandler = async (id) => {
+        const response = confirm("Seguro que desea eliminar?");
+
+        if (response) {
+            const result = await deleteWallet(id)
+
+            if(result) {
+                alert("Se eliminó con éxito");
+                window.location.reload();
+            }
+            else {
+                alert("Ocurrió un error");
+            }
+        }
+    }
 
     return(
         <Card shadow="sm">
@@ -14,6 +45,16 @@ export async function CardWalletBalance({ wallet, currency }) {
             </CardBody>
             <CardFooter className="text-base justify-between">
                 <p className="text-default-500">{currency}</p>
+                <Tooltip content="Editar">
+                    <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                        <EditIcon onClick={() => editWalletHandler(wallet.id)}/>
+                    </span>
+                </Tooltip>
+                <Tooltip color="danger" content="Eliminar">
+                    <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                        <DeleteIcon onClick={() => deleteWalletHandler(wallet.id)}/>
+                    </span>
+                </Tooltip>
             </CardFooter>
         </Card>
     )
