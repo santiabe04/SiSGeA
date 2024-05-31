@@ -1,4 +1,5 @@
-import { deleteSupplyKind } from "@/app/lib/services/intendance/supplykinds.service";
+import { getAllMeasurementUnits } from "@/app/lib/services/intendance/measurementunits.service";
+import { deleteSupplyKind, getAllEnabledSupplyKinds } from "@/app/lib/services/intendance/supplykinds.service";
 import StructureComponent from "@/app/ui/Structure";
 import TableComponent from "@/app/ui/Table";
 
@@ -8,8 +9,17 @@ export const metadata = {
 
 async function ConsultSupplyKindsPage() {
 
-    const formattedData = events.map(item => ({
-        ...item
+    const supplykinds = await getAllEnabledSupplyKinds();
+    const measurementUnits = await getAllMeasurementUnits();
+
+    const formatMeasurementUnits = (measurementUnit) => {
+        const measurementUnityMatch = measurementUnits.find(x => x.id == measurementUnit);
+        return `${measurementUnityMatch.name}`;
+    }
+
+    const formattedData = supplykinds.map(item => ({
+        ...item,
+        measurement_unit: formatMeasurementUnits(item.measurement_unit)
     }));
 
     const columns = [
