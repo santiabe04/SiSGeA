@@ -23,14 +23,14 @@ export async function CardCurrencyBalance({ currency, balance }) {
         const response = confirm("Seguro que desea eliminar?");
 
         if (response) {
-            const result = await deleteCurrency(id)
+            const result = await deleteCurrency(id);
 
-            if(result) {
+            if(result.res.status == 200) {
                 alert("Se eliminó con éxito");
                 window.location.reload();
             }
             else {
-                alert("Ocurrió un error");
+                alert("Ocurrió un error: " + result.res.res);
             }
         }
     }
