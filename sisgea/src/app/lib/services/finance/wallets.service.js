@@ -37,5 +37,5 @@ export const deleteWallet = async (id) => {
         }
     }, { cache: 'no-store' });
     const result = await resultOri.json();
-    return result.res;
+    return result;
 }

@@ -23,14 +23,14 @@ export async function CardWalletBalance({ wallet, currency }) {
         const response = confirm("Seguro que desea eliminar?");
 
         if (response) {
-            const result = await deleteWallet(id)
+            const result = await deleteWallet(id);
 
-            if(result) {
+            if(result.res.status != 500) {
                 alert("Se eliminó con éxito");
                 window.location.reload();
             }
             else {
-                alert("Ocurrió un error");
+                alert("Ocurrió un error: " + result.res.res);
             }
         }
     }
