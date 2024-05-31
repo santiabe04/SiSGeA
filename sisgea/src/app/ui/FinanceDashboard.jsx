@@ -25,11 +25,13 @@ async function FinanceDashboardComponent({ currenciesList, walletList }) {
                 <>
                 {
                     currenciesList && currenciesList.length > 0 && currenciesList.map((currency, index) => (
-                    <CardCurrencyBalance
-                        currency={currency}
-                        balance={getBalance(currency.id)}
-                        key={index}
-                    />
+                        <>
+                            <CardCurrencyBalance
+                                currency={currency}
+                                balance={getBalance(currency.id)}
+                                key={index}
+                            />
+                        </>
                     ))
                 }
                 {
@@ -41,11 +43,13 @@ async function FinanceDashboardComponent({ currenciesList, walletList }) {
                 <>
                 {
                     walletList && walletList.length > 0 && walletList.map((wallet, index) => (
-                    <CardWalletBalance
-                        wallet={wallet}
-                        currency={currenciesList.find(x => x.id === wallet.currency)?.iso || ''}
-                        key={index}
-                    />
+                        <>
+                            <CardWalletBalance
+                                wallet={wallet}
+                                currency={currenciesList.find(x => x.id === wallet.currency)?.iso || ''}
+                                key={index}
+                            />
+                        </>
                     ))
                 }
                 {

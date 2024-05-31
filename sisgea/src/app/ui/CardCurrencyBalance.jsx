@@ -1,8 +1,39 @@
 "use client"
 
-import { Card, CardFooter, CardHeader, CardBody } from "@nextui-org/react"
+import { Card, CardFooter, CardHeader, CardBody, Tooltip } from "@nextui-org/react"
+import { EditIcon } from "./EditIcon";
+import { DeleteIcon } from "./DeleteIcon";
+import { deleteCurrency } from "../lib/services/finance/currencies.service";
 
 export async function CardCurrencyBalance({ currency, balance }) {
+    const editCurrencyHandler = async (id) => {
+        // const result = await editAPICall(id)
+
+        // if(result) {
+        //     alert("Se editó con éxito");
+        //     window.location.reload();
+        // }
+        // else {
+        //     alert("Ocurrió un error");
+        // }
+        alert("Ocurrió un error");
+    }
+
+    const deleteCurrencyHandler = async (id) => {
+        const response = confirm("Seguro que desea eliminar?");
+
+        if (response) {
+            const result = await deleteCurrency(id)
+
+            if(result) {
+                alert("Se eliminó con éxito");
+                window.location.reload();
+            }
+            else {
+                alert("Ocurrió un error");
+            }
+        }
+    }
 
     return(
         <Card shadow="sm">
@@ -14,6 +45,16 @@ export async function CardCurrencyBalance({ currency, balance }) {
             </CardBody>
             <CardFooter className="text-base justify-between">
                 <p className="text-default-500">{currency.iso}</p>
+                <Tooltip content="Editar">
+                    <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                        <EditIcon  onClick={() => editCurrencyHandler(currency.id)}/>
+                    </span>
+                </Tooltip>
+                <Tooltip color="danger" content="Eliminar">
+                    <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                        <DeleteIcon onClick={() => deleteCurrencyHandler(currency.id)}/>
+                    </span>
+                </Tooltip>
             </CardFooter>
         </Card>
     )
