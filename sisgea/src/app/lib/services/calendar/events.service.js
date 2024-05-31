@@ -10,7 +10,7 @@ export const getAllEvents = async () => {
 
 /*getAllEnabledEvents*/
 export const getAllEnabledEvents = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/calendar/events', { cache: 'no-store' })
+    const resultOri = await fetch('http://localhost:3000/api/calendar/events/enabled', { cache: 'no-store' })
     const result = await resultOri.json()
     return result.res
 }

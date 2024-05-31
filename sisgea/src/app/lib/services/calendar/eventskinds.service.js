@@ -9,7 +9,7 @@ export const getAllEventKinds = async () => {
 
 /*getAllEnabledEventKinds*/
 export const getAllEnabledEventKinds = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/calendar/events/kinds', { cache: 'no-store' });
+    const resultOri = await fetch('http://localhost:3000/api/calendar/events/kinds/enabled', { cache: 'no-store' });
     const result = await resultOri.json();
     return result.res;
 }

@@ -8,7 +8,7 @@ export async function POST(req) {
 
     const result = await promisePool.query(`UPDATE event_kinds SET disabledStatus = 1 WHERE id = ${id};`);
 
-    const res = await result[0];
+    const res = result[0];
     return NextResponse.json({ res }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ res: err }, { status: 500 });

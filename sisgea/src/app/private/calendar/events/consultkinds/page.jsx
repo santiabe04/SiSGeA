@@ -1,4 +1,4 @@
-import { deleteEventKind } from "@/app/lib/services/calendar/eventskinds.service";
+import { deleteEventKind, getAllEnabledEventKinds } from "@/app/lib/services/calendar/eventskinds.service";
 import StructureComponent from "@/app/ui/Structure";
 import TableComponent from "@/app/ui/Table";
 
@@ -8,7 +8,9 @@ export const metadata = {
 
 async function ConsultEventKindsPage() {
 
-    const formattedData = events.map(item => ({
+    const kinds = await getAllEnabledEventKinds()
+
+    const formattedData = kinds.map(item => ({
         ...item
     }));
 
