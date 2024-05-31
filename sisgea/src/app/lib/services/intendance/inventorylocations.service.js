@@ -9,7 +9,7 @@ export const getAllInventoryLocations = async () => {
 
 /*getAllEnabledInventoryLocations*/
 export const getAllEnabledInventoryLocations = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/intendance/locations', { cache: 'no-store' });
+    const resultOri = await fetch('http://localhost:3000/api/intendance/locations/enabled', { cache: 'no-store' });
     const result = await resultOri.json();
     return result.res;
 }

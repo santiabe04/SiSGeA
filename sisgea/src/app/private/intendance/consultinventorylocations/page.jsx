@@ -1,4 +1,4 @@
-import { deleteInventoryLocation } from "@/app/lib/services/intendance/inventorylocations.service";
+import { deleteInventoryLocation, getAllEnabledInventoryLocations } from "@/app/lib/services/intendance/inventorylocations.service";
 import StructureComponent from "@/app/ui/Structure";
 import TableComponent from "@/app/ui/Table";
 
@@ -8,7 +8,9 @@ export const metadata = {
 
 async function ConsultInventoryLocationsPage() {
 
-    const formattedData = events.map(item => ({
+    const locations = await getAllEnabledInventoryLocations();
+
+    const formattedData = locations.map(item => ({
         ...item
     }));
 
