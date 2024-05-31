@@ -1,4 +1,4 @@
-import { deleteMeasurementUnit } from "@/app/lib/services/intendance/measurementunits.service";
+import { deleteMeasurementUnit, getAllEnabledMeasurementUnits } from "@/app/lib/services/intendance/measurementunits.service";
 import StructureComponent from "@/app/ui/Structure";
 import TableComponent from "@/app/ui/Table";
 
@@ -8,7 +8,9 @@ export const metadata = {
 
 async function ConsultMeasurementUnitsPage() {
 
-    const formattedData = events.map(item => ({
+    const measurementUnits = await getAllEnabledMeasurementUnits();
+
+    const formattedData = measurementUnits.map(item => ({
         ...item
     }));
 

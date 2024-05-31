@@ -9,7 +9,7 @@ export const getAllMeasurementUnits = async () => {
 
 /*getAllEnabledMeasurementUnits*/
 export const getAllEnabledMeasurementUnits = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/intendance/measurementUnits');
+    const resultOri = await fetch('http://localhost:3000/api/intendance/measurementUnits/enabled');
     const result = await resultOri.json();
     return result.res;
 }
