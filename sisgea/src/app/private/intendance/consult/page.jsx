@@ -1,4 +1,4 @@
-import { deleteInventory, editInventory, getAllEnabledInventory } from "@/app/lib/services/intendance/inventory.service";
+import { deleteInventory, getAllEnabledInventory } from "@/app/lib/services/intendance/inventory.service";
 import { getAllInventoryLocations } from "@/app/lib/services/intendance/inventorylocations.service";
 import { getAllSupplyKinds } from "@/app/lib/services/intendance/supplykinds.service";
 import StructureComponent from "@/app/ui/Structure";
@@ -59,7 +59,7 @@ async function ConsultInventoryPage() {
         <>
             <StructureComponent
                 title="Consultar Inventario"
-                content={(<TableComponent data={formattedData} rowsPerPage={10} title={"Consultar Inventario"} columns={columns} editAPICall={editInventory} deleteAPICall={deleteInventory} />)}
+                content={(<TableComponent data={formattedData} rowsPerPage={10} title={"Consultar Inventario"} columns={columns} editRoute={"editinventory/"} deleteAPICall={deleteInventory} />)}
             />
         </>
     );
