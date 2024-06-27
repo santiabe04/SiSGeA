@@ -29,7 +29,7 @@ export async function POST(req) {
 
     const update_date = `${year}:${month}:${day} ${hours}:${minutes}:${seconds}`;
 
-    var result = await promisePool.query(`UPDATE inventory SET ${setClauses}, update_date = '${update_date}.00' WHERE id = ${id};`);
+    var result = await promisePool.query('UPDATE inventory SET ?, update_date = '?.00' WHERE id = ?;',[setClauses,update_date,id]);
 
     const res = result[0];
     return NextResponse.json({ res: {res,status:200} }, { status: 200 });

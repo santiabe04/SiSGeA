@@ -6,7 +6,7 @@ export async function POST(req) {
   try {
     const id = await req.json();
 
-    const result = await promisePool.query(`SELECT * FROM inventory WHERE id = ${id};`);
+    const result = await promisePool.query('SELECT * FROM inventory WHERE id = ?;',[id]);
     const res = result[0];
     return NextResponse.json({ res:{res,status:200} }, { status: 200 });
   } catch (err) {

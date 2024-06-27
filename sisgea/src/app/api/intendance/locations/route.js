@@ -29,7 +29,7 @@ export async function POST(req) {
       }
     }).join(',');
 
-    var result = await promisePool.query(`INSERT INTO inventory_locations (${fields}) VALUES (${params});`);
+    var result = await promisePool.query('INSERT INTO inventory_locations (?) VALUES (?);',[fields,params]);
 
     const res = await result[0];
     return NextResponse.json({ res, updateRes }, { status: 200 });

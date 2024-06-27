@@ -32,19 +32,19 @@ export async function POST(req) {
       }
     }).join(',');
 
-    const currency = await promisePool.query(`SELECT currency FROM wallets WHERE id = ${values.find(x => x.name === 'wallet').value} AND disabledStatus = 0;`);
-    const kindCheck = await promisePool.query(`SELECT EXISTS(SELECT 1 FROM movement_kinds WHERE id = ${values.find(x => x.name === 'kind').value} AND disabledStatus = 0);`);
+    const currency = await promisePool.query('SELECT currency FROM wallets WHERE id = ? AND disabledStatus = 0;',[values.find(x => x.name === 'wallet').value]);
+    const kindCheck = await promisePool.query('SELECT EXISTS(SELECT 1 FROM movement_kinds WHERE id = ? AND disabledStatus = 0);',[values.find(x => x.name === 'kind').value]);
 
     if(Object.values(kindCheck[0][0])[0] != 0 && currency[0][0].currency) {
-      var result = await promisePool.query(`INSERT INTO movements (${fields},currency) VALUES (${params},${currency[0][0].currency});`);
+      var result = await promisePool.query('INSERT INTO movements (?,currency) VALUES (?,?);',[fields,params,currency[0][0].currency]);
 
       // Update wallet balance
       var updateResult;
       if(values.find(x => x.name === 'type').value == 0) {
-        updateResult = await promisePool.query(`UPDATE wallets SET balance = balance - ${values.find(x => x.name === 'amount').value} WHERE id = ${values.find(x => x.name === 'wallet').value};`);
+        updateResult = await promisePool.query('UPDATE wallets SET balance = balance - ? WHERE id = ?;',[values.find(x => x.name === 'amount').value,values.find(x => x.name === 'wallet').value]);
       }
       else {
-        updateResult = await promisePool.query(`UPDATE wallets SET balance = balance + ${values.find(x => x.name === 'amount').value} WHERE id = ${values.find(x => x.name === 'wallet').value};`);
+        updateResult = await promisePool.query('UPDATE wallets SET balance = balance + ? WHERE id = ?;',[values.find(x => x.name === 'amount').value,values.find(x => x.name === 'wallet').value]);
       }
       // Unlock tables
       await promisePool.query('UNLOCK TABLES;');

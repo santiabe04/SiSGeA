@@ -32,10 +32,10 @@ export async function POST(req) {
       }
     }).join(',');
 
-    const measurementUnitCheck = await promisePool.query(`SELECT EXISTS(SELECT 1 FROM measurement_units WHERE id = ${values.find(x => x.name === 'measurement_unit').value} AND disabledStatus = 0);`);
+    const measurementUnitCheck = await promisePool.query('SELECT EXISTS(SELECT 1 FROM measurement_units WHERE id = ? AND disabledStatus = 0);',[values.find(x => x.name === 'measurement_unit').value]);
 
     if(Object.values(measurementUnitCheck[0][0])[0] != 0) {
-      var result = await promisePool.query(`INSERT INTO supply_kinds (${fields}) VALUES (${params});`);
+      var result = await promisePool.query('INSERT INTO supply_kinds (?) VALUES (?);',[fields,params]);
       
       // Unlock tables
       await promisePool.query('UNLOCK TABLES;');

@@ -22,11 +22,11 @@ export async function POST(req) {
     const fields = values.map(item => item.name).join(',');
     const params = values.map(item => item.value === null ? "null" : item.value && ((item.type === "text" && item.value !== null) || (item.type === "textarea" && item.value !== null) ? `'${item.value}'` : item.value)).join(',');
 
-    const locationCheck = await promisePool.query(`SELECT EXISTS(SELECT 1 FROM inventory_locations WHERE id = ${values.find(x => x.name === 'location').value} AND disabledStatus = 0);`);
-    const supply_kindCheck = await promisePool.query(`SELECT EXISTS(SELECT 1 FROM supply_kinds WHERE id = ${values.find(x => x.name === 'supply_kind').value} AND disabledStatus = 0);`);
+    const locationCheck = await promisePool.query('SELECT EXISTS(SELECT 1 FROM inventory_locations WHERE id = ? AND disabledStatus = 0);',[values.find(x => x.name === 'location').value]);
+    const supply_kindCheck = await promisePool.query('SELECT EXISTS(SELECT 1 FROM supply_kinds WHERE id = ? AND disabledStatus = 0);',[values.find(x => x.name === 'supply_kind').value]);
 
     if(Object.values(locationCheck[0][0])[0] != 0 && Object.values(supply_kindCheck[0][0])[0] != 0) {
-      var result = await promisePool.query(`INSERT INTO inventory (${fields}) VALUES (${params});`);
+      var result = await promisePool.query('INSERT INTO inventory (?) VALUES (?);',[fields,params]);
       
       // Unlock tables
       await promisePool.query('UNLOCK TABLES;');

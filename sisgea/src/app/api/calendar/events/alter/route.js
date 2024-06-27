@@ -18,7 +18,7 @@ export async function POST(req) {
       }
     }).join(', ');
 
-    var result = await promisePool.query(`UPDATE events SET ${setClauses} WHERE id = ${id};`);
+    var result = await promisePool.query('UPDATE events SET ? WHERE id = ?;',[setClauses,id]);
 
     const res = result[0];
     return NextResponse.json({ res: {res,status:200} }, { status: 200 });

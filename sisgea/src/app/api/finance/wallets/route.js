@@ -32,10 +32,10 @@ export async function POST(req) {
       }
     }).join(',');
 
-    const currencyCheck = await promisePool.query(`SELECT EXISTS(SELECT 1 FROM currencies WHERE id = ${values.find(x => x.name === 'currency').value} AND disabledStatus = 0);`);
+    const currencyCheck = await promisePool.query('SELECT EXISTS(SELECT 1 FROM currencies WHERE id = ? AND disabledStatus = 0);',[values.find(x => x.name === 'currency').value]);
 
     if(Object.values(currencyCheck[0][0])[0] != 0) {
-      var result = await promisePool.query(`INSERT INTO wallets (${fields}) VALUES (${params});`);
+      var result = await promisePool.query('INSERT INTO wallets (?) VALUES (?);',[fields,params]);
 
       // Unlock tables
       await promisePool.query('UNLOCK TABLES;');
