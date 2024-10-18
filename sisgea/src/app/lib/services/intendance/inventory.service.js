@@ -1,6 +1,5 @@
 'use server'
 
-<<<<<<< Updated upstream
 /* GETS */
 /*getAllInventory*/
 export const getAllInventory = async () => {
@@ -67,11 +66,4 @@ export const getInventoryByID = async (id) => {
     }, { cache: 'no-store' });
     const result = await resultOri.json();
     return result.res;
-=======
-/*getAllInventory*/
-export const getAllInventory = async () => {
-    const resultOri = await fetch('http://localhost:3000/api/intendance/inventory')
-    const result = await resultOri.json()
-    return result.res
->>>>>>> Stashed changes
 }

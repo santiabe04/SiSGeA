@@ -10,7 +10,6 @@ export const metadata = {
 }
 
 async function ConsultMovementPage() {
-
     const formatType = (type) => {
         return `${type == 1 ? "Entrada" : "Salida"}`;
     };

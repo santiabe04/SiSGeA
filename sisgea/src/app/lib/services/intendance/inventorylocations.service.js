@@ -2,7 +2,6 @@
 
 /*getAllInventoryLocations*/
 export const getAllInventoryLocations = async () => {
-<<<<<<< Updated upstream
     const resultOri = await fetch('http://localhost:3000/api/intendance/locations', { cache: 'no-store' });
     const result = await resultOri.json();
     return result.res;
@@ -39,9 +38,4 @@ export const deleteInventoryLocation = async (id) => {
     }, { cache: 'no-store' });
     const result = await resultOri.json();
     return result.res;
-=======
-    const resultOri = await fetch('http://localhost:3000/api/intendance/locations')
-    const result = await resultOri.json()
-    return result.res
->>>>>>> Stashed changes
 }

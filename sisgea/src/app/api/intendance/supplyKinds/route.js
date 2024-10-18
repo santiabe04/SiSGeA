@@ -10,7 +10,6 @@ export async function GET() {
   } catch (err) {
     return NextResponse.json({ error: err }, { status: 500 })
   }
-<<<<<<< Updated upstream
 }
 
 export async function POST(req) {
@@ -52,6 +51,4 @@ export async function POST(req) {
   } catch (err) {
     return NextResponse.json({ res: err }, { status: 500 });
   }
-=======
->>>>>>> Stashed changes
 }

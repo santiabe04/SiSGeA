@@ -57,12 +57,8 @@ CREATE TABLE events (
     date_end DATE NOT NULL,
     time TIME NOT NULL,
     time_end TIME NOT NULL,
-<<<<<<< Updated upstream
     kind INT NOT NULL,
     disabledStatus INT NOT NULL DEFAULT 0
-=======
-    kind INT NOT NULL
->>>>>>> Stashed changes
 );
 
 --MEASUREMENT_UNITS
@@ -70,12 +66,8 @@ CREATE TABLE measurement_units (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(45) NOT NULL,
     detail TINYTEXT,
-<<<<<<< Updated upstream
     short VARCHAR(4) NOT NULL,
     disabledStatus INT NOT NULL DEFAULT 0
-=======
-    short VARCHAR(4) NOT NULL
->>>>>>> Stashed changes
 );
 
 --SUPPLY_KINDS
@@ -83,24 +75,16 @@ CREATE TABLE supply_kinds (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(45) NOT NULL,
     detail TINYTEXT,
-<<<<<<< Updated upstream
     measurement_unit INT NOT NULL,
     disabledStatus INT NOT NULL DEFAULT 0
-=======
-    measurement_unit INT NOT NULL
->>>>>>> Stashed changes
 );
 
 --INVENTORY_LOCATIONS
 CREATE TABLE inventory_locations (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(45) NOT NULL,
-<<<<<<< Updated upstream
     detail TINYTEXT,
     disabledStatus INT NOT NULL DEFAULT 0
-=======
-    detail TINYTEXT
->>>>>>> Stashed changes
 );
 
 --INVENTORY
@@ -109,10 +93,6 @@ CREATE TABLE inventory (
     supply_kind INT NOT NULL,
     location INT NOT NULL,
     quantity DECIMAL(20,2) NOT NULL,
-<<<<<<< Updated upstream
     update_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     disabledStatus INT NOT NULL DEFAULT 0
-=======
-    update_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
->>>>>>> Stashed changes
 );

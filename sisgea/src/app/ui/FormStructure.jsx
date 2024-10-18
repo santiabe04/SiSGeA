@@ -1,6 +1,5 @@
 'use client'
 
-<<<<<<< Updated upstream
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import StructureComponent from "./Structure";
 import { useRouter } from "next/navigation";
@@ -66,29 +65,6 @@ function FormStructureComponent({ title, fields, fallbackRoute, submitAPICall, e
         if (response) {
         router.push(fallbackRoute);
         }
-=======
-import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react"
-import StructureComponent from "./Structure"
-
-function FormStructureComponent({ title, checks, fields, submitFallback, cancelFallback }) {
-    const values = fields.map((field) => ({ fieldName: field.name, value: null }))
-
-    const checker = (fieldName) => {
-        const checker = checks.find(x => x.fieldName == fieldName)
-    }
-
-    const changeHandler = (fieldName, value) => {
-        const fieldIndex = fields.findIndex(x => x.fieldName == fieldName)
-
-        if (fieldIndex !== -1) {
-            values[fieldIndex].value = value
-        }
-    }
-
-    const preSubmit = () => {
-        /* Check With Checker and then Fallback */
-        console.log(values)
->>>>>>> Stashed changes
     }
 
     return (
@@ -97,7 +73,6 @@ function FormStructureComponent({ title, checks, fields, submitFallback, cancelF
         content=
         {
             <>
-<<<<<<< Updated upstream
             <form onSubmit={Submit}>
 
                 {
@@ -112,25 +87,10 @@ function FormStructureComponent({ title, checks, fields, submitFallback, cancelF
                                     labelPlacement="outside"
                                     defaultValue={field.value || ""}
                                     onChange={e => changeHandler(field.name, e.target.value)}
-=======
-            <form onSubmit={preSubmit}>
-
-                {
-                    fields.map((field) => {
-                        {
-                            field.type == "text" && (
-                                <Input
-                                    isRequired={field.isRequired}
-                                    label={field.name}
-                                    placeholder={field.name}
-                                    labelPlacement="outside"
-                                    onChange={e => changeHandler(field.name,e.target.value)}
->>>>>>> Stashed changes
                                     type="text"
                                     size="lg"
                                     className="p-2"
                                 />
-<<<<<<< Updated upstream
                             );
                         }
 
@@ -143,22 +103,10 @@ function FormStructureComponent({ title, checks, fields, submitFallback, cancelF
                                     labelPlacement="outside"
                                     defaultValue={field.value || ""}
                                     onChange={e => changeHandler(field.name, e.target.value)}
-=======
-                            )
-                        }
-                        {
-                            field.type == "detail" && (
-                                <Textarea
-                                    label={field.name}
-                                    placeholder={field.name}
-                                    labelPlacement="outside"
-                                    onChange={e => changeHandler(field.name,e.target.value)}
->>>>>>> Stashed changes
                                     type="text"
                                     size="lg"
                                     className="p-2"
                                 />
-<<<<<<< Updated upstream
                             );
                         }
 
@@ -172,24 +120,11 @@ function FormStructureComponent({ title, checks, fields, submitFallback, cancelF
                                     labelPlacement="outside"
                                     defaultValue={field.value || ""}
                                     onChange={e => changeHandler(field.name, e.target.value)}
-=======
-                            )
-                        }
-                        {
-                            (field.type == "number" || field.type == "float") && (
-                                <Input
-                                    isRequired={field.isRequired}
-                                    label={field.name}
-                                    placeholder={field.type == "number" ? "0" : "0.00"}
-                                    labelPlacement="outside"
-                                    onChange={e => changeHandler(field.name,e.target.value)}
->>>>>>> Stashed changes
                                     type="number"
                                     size="lg"
                                     className="p-2"
                                     startContent={field.startContent}
                                 />
-<<<<<<< Updated upstream
                             );
                         }
 
@@ -202,22 +137,10 @@ function FormStructureComponent({ title, checks, fields, submitFallback, cancelF
                                     labelPlacement="outside"
                                     defaultValue={field.value || ""}
                                     onChange={e => changeHandler(field.name, e.target.value)}
-=======
-                            )
-                        }
-                        {
-                            field.type == "date" && (
-                                <Input
-                                    isRequired={field.isRequired}
-                                    label={field.name}
-                                    labelPlacement="outside"
-                                    onChange={e => changeHandler(field.name,e.target.value)}
->>>>>>> Stashed changes
                                     type="date"
                                     size="lg"
                                     className="p-2"
                                 />
-<<<<<<< Updated upstream
                             );
                         }
 
@@ -230,22 +153,10 @@ function FormStructureComponent({ title, checks, fields, submitFallback, cancelF
                                     labelPlacement="outside"
                                     defaultValue={field.value || ""}
                                     onChange={e => changeHandler(field.name, e.target.value)}
-=======
-                            )
-                        }
-                        {
-                            field.type == "time" && (
-                                <Input
-                                    isRequired={field.isRequired}
-                                    label={field.name}
-                                    labelPlacement="outside"
-                                    onChange={e => changeHandler(field.name,e.target.value)}
->>>>>>> Stashed changes
                                     type="time"
                                     size="lg"
                                     className="p-2"
                                 />
-<<<<<<< Updated upstream
                             );
                         }
 
@@ -259,68 +170,34 @@ function FormStructureComponent({ title, checks, fields, submitFallback, cancelF
                                     labelPlacement="outside"
                                     defaultSelectedKeys={field.value ? `["${field.value}"]` : "[1]"}
                                     onChange={e => changeHandler(field.name, e.target.value)}
-=======
-                            )
-                        }
-                        {
-                            field.type == "select" && (
-                                <Select
-                                    isRequired={field.isRequired}
-                                    label={field.name}
-                                    placeholder={"Seleccione "+field.name}
-                                    labelPlacement="outside"
-                                    onChange={e => changeHandler(field.name,e.target.value)}
->>>>>>> Stashed changes
                                     size="lg"
                                     className="p-2"
                                 >
                                     {
-<<<<<<< Updated upstream
                                         field.options && field.options.map((option) => (
                                             <SelectItem key={option.id} value={option.id}>
                                                 {option.label}
-=======
-                                        field.options.map((option) => (
-                                            <SelectItem key={option.id} value={option.id}>
-                                                {option.name}
->>>>>>> Stashed changes
                                             </SelectItem>
                                         ))
                                     }
                                 </Select>
-<<<<<<< Updated upstream
                             );
                         }
 
                         return null;
-=======
-                            )
-                        }
->>>>>>> Stashed changes
                     })
                 }
 
                 <br />
 
                 <Button size="lg" type="submit" className="mr-2">Aceptar</Button>
-<<<<<<< Updated upstream
                 <Button size="lg" type="button" color="danger" onClick={Cancel}>Cancelar</Button>
-=======
-                <Button size="lg" type="button" color="danger" onClick={cancelFallback}>Cancelar</Button>
->>>>>>> Stashed changes
 
             </form>
             </>
         }
         />
-<<<<<<< Updated upstream
     );
 }
 
 export default FormStructureComponent;
-=======
-    )
-}
-
-export default FormStructureComponent
->>>>>>> Stashed changes
